@@ -3,7 +3,7 @@ import { View, TextInput, Button, StyleSheet, Text } from 'react-native';
 import Carpool from '../models/Carpool';
 import CarpoolDetails from '../models/CarpoolDetails'; 
 import CarpoolDate from '../models/CarpoolDate'; 
-import { saveCarpool } from '../utils/storageUtil';
+import { saveCarpool } from '../services/storageUtil';
 
 
 
@@ -33,8 +33,8 @@ const HomeScreen = () => {
   
     saveCarpool(newCarpool, newCarpoolDetails, departureDate);
   
-    carpoolDates.addCarpool(newCarpool.carpoolId, departureDate);
-    setCarpoolDates(carpoolDates);
+    // carpoolDates.addCarpool(newCarpool.carpoolId, departureDate);
+    // setCarpoolDates(carpoolDates);
   };
   return (
       <View style={styles.container}>

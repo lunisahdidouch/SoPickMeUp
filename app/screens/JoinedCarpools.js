@@ -10,10 +10,12 @@ const ViewCarpoolsScreen = () => {
             const storedCarpools = await AsyncStorage.getItem('carpoolsByDate');
             const parsedCarpools = storedCarpools ? JSON.parse(storedCarpools) : {};
             setCarpools(parsedCarpools);
+            console.log(parsedCarpools)
         } catch (error) {
             console.error('Failed to fetch carpools', error);
         }
     };
+    // aparte functie van maken en get request wordt al gedaan in de storageUtil functie.
 
     useEffect(() => {
         fetchCarpools();
@@ -30,6 +32,7 @@ const ViewCarpoolsScreen = () => {
                 ))}
             </View>
         ))}
+          <Button title="Refresh carpools" onPress={fetchCarpools} />
       </ScrollView>
   );
   
