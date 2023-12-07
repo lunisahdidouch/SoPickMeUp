@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import * as NavigationBar from 'expo-navigation-bar';
-import * as React from 'react';
+import React, { Fragment } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import HomeScreen from './app/screens/HomeScreen';
@@ -9,6 +9,9 @@ import JoinedCarpools from './app/screens/JoinedCarpools';
 import BusFrontIcon from './app/assets/BusFront';
 import SteeringWheelIcon from './app/assets/SteeringWheel';
 import BusSideIcon from './app/assets/BusSide';
+import CustomHeader from './app/components/CustomHeader';
+import Background from './app/components/BackgroundShapes';
+import withBackground from './app/components/ScreenWithBackground';
 
 
 
@@ -30,11 +33,12 @@ function MyTabs() {
         fontSize: 16,
         marginBottom: 3,
       },
+      header: () => <CustomHeader />,
     }}
     >
       <Tab.Screen 
       name="Mijn carpools" 
-      component={CreatedCarpools}
+      component={withBackground(CreatedCarpools)}
       options={{
         tabBarIcon: ({ focused, color, size }) => (
           <SteeringWheelIcon width={40} height={40} color = {focused ? "#12B3DB" : "#0070AD"} />
@@ -43,7 +47,7 @@ function MyTabs() {
       />
       <Tab.Screen 
       name="Alle carpools" 
-      component={HomeScreen} 
+      component={withBackground(HomeScreen)} 
       options={{
         tabBarIcon: ({ focused, color, size }) => (
           <BusFrontIcon width={40} height={40} color={focused ? "#12B3DB" : "#0070AD"} />
@@ -52,7 +56,7 @@ function MyTabs() {
       />
       <Tab.Screen 
       name="Meerijden" 
-      component={JoinedCarpools} 
+      component={withBackground(JoinedCarpools)} 
       options={{
         tabBarIcon: ({ focused, color, size }) => (
           <BusSideIcon width={50} height={50} color={focused ? "#12B3DB" : "#0070AD"} />

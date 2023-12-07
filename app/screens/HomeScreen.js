@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { View, TextInput, Button, StyleSheet, Text } from 'react-native';
 import Carpool from '../models/Carpool';
 import CarpoolDetails from '../models/CarpoolDetails'; 
-import CarpoolDate from '../models/CarpoolDate'; 
 import { saveCarpool } from '../services/storageUtil';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 
 
@@ -19,11 +20,19 @@ const HomeScreen = () => {
       availableSeats: ''
   });
 
+  const deleteCarpools = async () => {
+    try {
+        await AsyncStorage.removeItem('carpoolsByDate');
+        console.log('Carpools deleted!');
+    } catch (error) {
+        console.error('Failed to delete carpools', error);
+    }
+};
+
+
   const handleInputChange = (name, value) => {
       setFormData({ ...formData, [name]: value });
   };
-
-  const [carpoolDates, setCarpoolDates] = useState(new CarpoolDate());
 
   const handleSubmit = () => {
     const { starterLocation, endLocation, departureDate, departureTime, availableSeats, rideType, comment } = formData;
@@ -32,9 +41,7 @@ const HomeScreen = () => {
     const newCarpoolDetails = new CarpoolDetails(newCarpool.carpoolId, departureTime, availableSeats, rideType === 'returning', true, comment);
   
     saveCarpool(newCarpool, newCarpoolDetails, departureDate);
-  
-    // carpoolDates.addCarpool(newCarpool.carpoolId, departureDate);
-    // setCarpoolDates(carpoolDates);
+
   };
   return (
       <View style={styles.container}>
@@ -74,7 +81,8 @@ const HomeScreen = () => {
               value={formData.availableSeats}
               onChangeText={(text) => handleInputChange('availableSeats', text)}
           />
-          <Button title="Create Carpool" onPress={handleSubmit} />
+          <Button class="createCarpool" title="Create Carpool" onPress={handleSubmit} />
+          <Button title="Delete Carpools" onPress={deleteCarpools} />
       </View>
   );
 };
@@ -86,6 +94,9 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       padding: 20
   },
+  createCarpool:{
+    marginBottom: 4
+  }
 });
 
 export default HomeScreen
