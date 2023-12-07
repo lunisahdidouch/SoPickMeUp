@@ -38,7 +38,8 @@ function MyTabs() {
     >
       <Tab.Screen 
       name="Mijn carpools" 
-      component={withBackground(CreatedCarpools)}
+      // component={withBackground(CreatedCarpools)}
+      component={CreatedCarpools}
       options={{
         tabBarIcon: ({ focused, color, size }) => (
           <SteeringWheelIcon width={40} height={40} color = {focused ? "#12B3DB" : "#0070AD"} />
@@ -47,7 +48,8 @@ function MyTabs() {
       />
       <Tab.Screen 
       name="Alle carpools" 
-      component={withBackground(HomeScreen)} 
+      // component={withBackground(HomeScreen)} 
+      component={HomeScreen} 
       options={{
         tabBarIcon: ({ focused, color, size }) => (
           <BusFrontIcon width={40} height={40} color={focused ? "#12B3DB" : "#0070AD"} />
@@ -56,7 +58,8 @@ function MyTabs() {
       />
       <Tab.Screen 
       name="Meerijden" 
-      component={withBackground(JoinedCarpools)} 
+      // component={withBackground(JoinedCarpools)} 
+      component= {JoinedCarpools}
       options={{
         tabBarIcon: ({ focused, color, size }) => (
           <BusSideIcon width={50} height={50} color={focused ? "#12B3DB" : "#0070AD"} />
@@ -68,7 +71,7 @@ function MyTabs() {
 }
 
 export default function App() {
-  const visibility = NavigationBar.useVisibility()
+  // const visibility = NavigationBar.useVisibility()
   return (
     <NavigationContainer>
       <MyTabs />

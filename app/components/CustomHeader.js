@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         padding: 10,
-        backgroundColor: '#000',
+        backgroundColor: '#0070AD',
     },
     iconContainer: {
         flexDirection: 'row',

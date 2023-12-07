@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, StyleSheet, Text } from 'react-native';
 import Carpool from '../models/Carpool';
-import CarpoolDetails from '../models/CarpoolDetails'; 
+import CarpoolDetails from '../models/CarpoolDetails';
 import { saveCarpool } from '../services/storageUtil';
+import TextField from '..//components/TextField';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+// import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+// import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 
 
@@ -31,6 +36,7 @@ const HomeScreen = () => {
 
 
   const handleInputChange = (name, value) => {
+      console.log(name, value);
       setFormData({ ...formData, [name]: value });
   };
 
@@ -45,37 +51,43 @@ const HomeScreen = () => {
   };
   return (
       <View style={styles.container}>
-          <TextInput
-              placeholder="Departure Location"
+          <TextField
+              placeholder="Vertrek plaats"
               value={formData.starterLocation}
               onChangeText={(text) => handleInputChange('starterLocation', text)}
           />
-          <TextInput
-              placeholder="Destination"
+          <TextField
+              placeholder="Bestemming"
               value={formData.endLocation}
               onChangeText={(text) => handleInputChange('endLocation', text)}
           />
-          <TextInput
+          <TextField
               placeholder="Trip Duration"
               value={formData.tripDuration}
               onChangeText={(text) => handleInputChange('tripDuration', text)}
           />
-          <TextInput
+          <TextField
               placeholder="Departure Date"
               value={formData.departureDate}
               onChangeText={(text) => handleInputChange('departureDate', text)}
           />
-          <TextInput
+          {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DemoContainer components={['DatePicker']}>
+                <DatePicker label="Basic date picker" />
+            </DemoContainer>
+          </LocalizationProvider> */}
+          
+          <TextField
               placeholder="Departure Time"
               value={formData.departureTime}
               onChangeText={(text) => handleInputChange('departureTime', text)}
           />
-          <TextInput
+          <TextField
               placeholder="Ride Type"
               value={formData.rideType}
               onChangeText={(text) => handleInputChange('rideType', text)}
           />
-          <TextInput
+          <TextField
               placeholder="Available Seats"
               keyboardType="numeric"
               value={formData.availableSeats}

@@ -13,7 +13,7 @@ const ViewCarpoolsScreen = () => {
         setCarpools(fetchedCarpools);
     }
 
-    useEffect(async () => {
+    useEffect( () => {
         refreshCarpools();
     }, []);
     return (
@@ -23,9 +23,4 @@ const ViewCarpoolsScreen = () => {
         />
   );
 };
-
-const styles = StyleSheet.create({
-
-});
-
 export default ViewCarpoolsScreen;

@@ -7,16 +7,16 @@ const Background = ({ children }) => {
   return (
     <View style={styles.container}>
       <ShapeTop 
-    //   style={StyleSheet.compose(styles.backgroundImage, styles.topShape)} 
-      width={50}
-      height={50}
+        style={{ ...styles.backgroundImage, ...styles.topShape }}
+        width={50}
+        height={50}
+        
       />
-      {/* <ShapeBottom style={StyleSheet.compose(styles.backgroundImage, styles.bottomShape)} /> */}
       <ShapeBottom 
-    //   style={StyleSheet.compose(styles.backgroundImage, styles.bottomShape)}
-      style={styles.backgroundImage}
-      width={50}
-      height={50}
+        style={styles.backgroundImage}
+        width={50}
+        height={50}
+        bottom={0}
       />
       {children}
     </View>
@@ -29,10 +29,10 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     position: 'absolute',
-    top: 0,
-    left: 30,
-    // width: '20%',
-    // height: '10%',
+    width: '20%',
+    height: '10%',
+    bottom: 0,
+    right: 0,
   },
   topShape: {
     top: 0,
