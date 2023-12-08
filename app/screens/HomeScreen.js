@@ -5,10 +5,7 @@ import CarpoolDetails from '../models/CarpoolDetails';
 import { saveCarpool } from '../services/storageUtil';
 import TextField from '..//components/TextField';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-// import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import AndroidDatePicker from '../components/DatePicker';
 
 
 
@@ -36,7 +33,6 @@ const HomeScreen = () => {
 
 
   const handleInputChange = (name, value) => {
-      console.log(name, value);
       setFormData({ ...formData, [name]: value });
   };
 
@@ -71,6 +67,7 @@ const HomeScreen = () => {
               value={formData.departureDate}
               onChangeText={(text) => handleInputChange('departureDate', text)}
           />
+            <AndroidDatePicker />
           {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DemoContainer components={['DatePicker']}>
                 <DatePicker label="Basic date picker" />
