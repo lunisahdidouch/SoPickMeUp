@@ -68,12 +68,7 @@ const HomeScreen = () => {
               onChangeText={(text) => handleInputChange('departureDate', text)}
           />
             <AndroidDatePicker />
-          {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DemoContainer components={['DatePicker']}>
-                <DatePicker label="Basic date picker" />
-            </DemoContainer>
-          </LocalizationProvider> */}
-          
+        
           <TextField
               placeholder="Departure Time"
               value={formData.departureTime}
@@ -90,8 +85,8 @@ const HomeScreen = () => {
               value={formData.availableSeats}
               onChangeText={(text) => handleInputChange('availableSeats', text)}
           />
-          <Button class="createCarpool" title="Create Carpool" onPress={handleSubmit} />
-          <Button title="Delete Carpools" onPress={deleteCarpools} />
+          <Button styles={styles.createCarpool} title="Create Carpool" onPress={handleSubmit} />
+          <Button styles={styles.createCarpool} title="Delete Carpools" onPress={deleteCarpools} />
       </View>
   );
 };
@@ -99,12 +94,12 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
       flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
+    //   justifyContent: 'left',
+    //   alignItems: 'center',
       padding: 20
   },
   createCarpool:{
-    marginBottom: 4
+    marginTop: 20
   }
 });
 
