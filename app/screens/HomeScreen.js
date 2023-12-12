@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet, Text } from 'react-native';
+import { View, Button, StyleSheet } from 'react-native';
 import Carpool from '../models/Carpool';
 import CarpoolDetails from '../models/CarpoolDetails';
 import { saveCarpool } from '../services/storageUtil';
 import TextField from '..//components/TextField';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import AndroidDatePicker from '../components/DatePicker';
+import DatePicker from '../components/DatePicker';
+import TimePicker from '../components/TimePicker';
+import AvailableSeats from '../components/AvailableSeats';
+import RideOptions from '../components/RideOptions';
 
 
 
@@ -22,6 +25,11 @@ const HomeScreen = () => {
       availableSeats: ''
   });
 
+  const pickerItems = [
+    { label: 'Heen', value: 'false'},
+    { label: 'Heen en terug', value: 'true'},
+  ];
+
   const deleteCarpools = async () => {
     try {
         await AsyncStorage.removeItem('carpoolsByDate');
@@ -33,6 +41,7 @@ const HomeScreen = () => {
 
 
   const handleInputChange = (name, value) => {
+      console.log("Values: " + name, value);
       setFormData({ ...formData, [name]: value });
   };
 
@@ -40,7 +49,7 @@ const HomeScreen = () => {
     const { starterLocation, endLocation, departureDate, departureTime, availableSeats, rideType, comment } = formData;
     const userId = '5';
     const newCarpool = new Carpool(userId, starterLocation, endLocation);
-    const newCarpoolDetails = new CarpoolDetails(newCarpool.carpoolId, departureTime, availableSeats, rideType === 'returning', true, comment);
+    const newCarpoolDetails = new CarpoolDetails(newCarpool.carpoolId, departureTime, availableSeats, rideType, comment);
   
     saveCarpool(newCarpool, newCarpoolDetails, departureDate);
 
@@ -57,33 +66,31 @@ const HomeScreen = () => {
               value={formData.endLocation}
               onChangeText={(text) => handleInputChange('endLocation', text)}
           />
-          <TextField
-              placeholder="Trip Duration"
-              value={formData.tripDuration}
-              onChangeText={(text) => handleInputChange('tripDuration', text)}
-          />
-          <TextField
-              placeholder="Departure Date"
+          <View style={styles.pickers}>
+            <DatePicker
               value={formData.departureDate}
-              onChangeText={(text) => handleInputChange('departureDate', text)}
-          />
-            <AndroidDatePicker />
-        
-          <TextField
-              placeholder="Departure Time"
+              onDateChange={(selectedDate) => handleInputChange('departureDate', selectedDate.toLocaleDateString())}
+            />
+            <TimePicker
               value={formData.departureTime}
-              onChangeText={(text) => handleInputChange('departureTime', text)}
-          />
-          <TextField
+              onTimeChange={(selectedTime) => handleInputChange('departureTime', selectedTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }))}
+            />
+          </View>
+          {/* <TextField
               placeholder="Ride Type"
               value={formData.rideType}
               onChangeText={(text) => handleInputChange('rideType', text)}
+          /> */}
+          <AvailableSeats
+            value={formData.availableSeats}
+            onChangeText={(text) => handleInputChange('availableSeats', text)}
           />
-          <TextField
-              placeholder="Available Seats"
-              keyboardType="numeric"
-              value={formData.availableSeats}
-              onChangeText={(text) => handleInputChange('availableSeats', text)}
+          <RideOptions
+            items={pickerItems}
+            defaultValue={pickerItems[0].value}
+            name="rideType"
+            mainValue={formData.rideType}
+            handleInputChange={handleInputChange}
           />
           <Button styles={styles.createCarpool} title="Create Carpool" onPress={handleSubmit} />
           <Button styles={styles.createCarpool} title="Delete Carpools" onPress={deleteCarpools} />
@@ -94,13 +101,18 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
       flex: 1,
-    //   justifyContent: 'left',
-    //   alignItems: 'center',
       padding: 20
   },
   createCarpool:{
     marginTop: 20
-  }
+  },
+  pickers:{
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: 363,
+  },
 });
 
 export default HomeScreen

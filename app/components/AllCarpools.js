@@ -1,4 +1,6 @@
 import { View, Text, Button, StyleSheet, ScrollView } from 'react-native';
+import CarpoolCard from './CarpoolCard';
+
 // import { fetchCarpools } from '../services/fetchCarpools';
 
 const ViewCarpools = ({carpools, fetchCarpools}) => {
@@ -8,14 +10,24 @@ const ViewCarpools = ({carpools, fetchCarpools}) => {
             <View key={date}>
                 <Text>{date}</Text>
                 {carpoolsList.map((carpoolDetails, index) => (
-                    <Text key={index}>
-                        {carpoolDetails.starterLocation} to {carpoolDetails.endLocation}
-                    </Text>
-                ))}
+                  // console.log("1: " + carpoolDetails.details.availableSeats),
+                  // console.log("2: " + carpoolDetails.details.returningRide),
+                  // console.log("3: " + carpoolDetails.details.departureTime),
+                  //   <Text key={index}>
+                  //       Departure time: {carpoolDetails.details.departureTime} 
+                  //       {carpoolDetails.starterLocation} to {carpoolDetails.endLocation}
+                  //       Returning ride: {carpoolDetails.details.returningRide}
+                  //       Available Seats: {carpoolDetails.details.availableSeats}
+
+                  //   </Text>
+                  <CarpoolCard key={index} carpoolDetails={carpoolDetails} />
+                )
+                )}
             </View>
         ))}
         <Button title="Refresh carpools" onPress={fetchCarpools} />
         </ScrollView>
+
 )};
 
 const styles = StyleSheet.create({

@@ -4,7 +4,7 @@ export const fetchCarpools = async () => {
     try {
         const savedCarpools = JSON.parse(await AsyncStorage.getItem('carpoolsByDate')) || {};
         
-        console.log('fetched data- ' + savedCarpools);
+        // console.log('fetched data- ' + savedCarpools);
         console.log('Carpool fetched!');
         return savedCarpools;
     } catch (error) {
