@@ -20,7 +20,9 @@ const ViewCarpools = ({carpools, fetchCarpools}) => {
                   //       Available Seats: {carpoolDetails.details.availableSeats}
 
                   //   </Text>
-                  <CarpoolCard key={index} carpoolDetails={carpoolDetails} />
+                  <View style={styles.container}>
+                    <CarpoolCard key={index} carpoolDetails={carpoolDetails} />
+                  </View>
                 )
                 )}
             </View>
@@ -31,7 +33,9 @@ const ViewCarpools = ({carpools, fetchCarpools}) => {
 )};
 
 const styles = StyleSheet.create({
-   
+   container: {
+    alignItems: 'center',
+   }
 });
 
 export default ViewCarpools;
