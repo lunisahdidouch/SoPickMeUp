@@ -12,7 +12,7 @@ const ViewCarpools = ({carpools, fetchCarpools}) => {
             // console.log(carpoolsList),
             // console.log(carpools),
             <View key={date}>
-              <Text>{date}</Text>
+              <Text className="ml-9 mb-2 font-bold text-base">{date}</Text>
               {carpoolsList.map((carpoolDetails, index) => (
                 <View key={`${carpoolDetails.date}-${index}`} style={styles.container}>
                   {/* <CarpoolCard carpoolDetails={carpoolDetails} />*/}
@@ -21,7 +21,7 @@ const ViewCarpools = ({carpools, fetchCarpools}) => {
                       <View style={styles.busIcon}>
                         <BusFront width="52" height="52" color="#0070AD" />
                       </View>
-                      <Text>{carpoolDetails.details.departureTime}</Text>
+                      <Text className="mr-2">{carpoolDetails.details.departureTime}</Text>
                       <View style={styles.imageContainer} className="mr-2">
                         <Image
                           style={styles.routeIcon}
@@ -33,16 +33,15 @@ const ViewCarpools = ({carpools, fetchCarpools}) => {
                       </View>
                       <View style={styles.carpoolDetails}>
                         <View style={styles.departureRow}>
-                          <View>
-                            <View style={styles.timeRow}>
-                              <Text>{carpoolDetails.starterLocation}</Text>
-                            </View>
-                            <Text style={styles.destination}>{carpoolDetails.endLocation}</Text>
+                          <View className="ml-1">
+                              <Text className="">{carpoolDetails.starterLocation}</Text>
+                            <Text className="mt-6" style={styles.destination}>{carpoolDetails.endLocation}</Text>
                           </View>
                           <View className="flex flex-column justify-center">
                             <Text className="ml-4">Vrije plaatsen:</Text>
-                            <Text className="ml-14">{carpoolDetails.details.availableSeats}</Text>
+                            <Text className="ml-14 text-blue-600 font-bold text-xl">{carpoolDetails.details.availableSeats}</Text>
                           </View>
+                          <Text className="text-2xl mt-4 ml-1 font-bold">{'>'} </Text>
                         </View>
                       </View>
                     </View>
@@ -67,7 +66,7 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     width: 350,
     height: 100,
-    padding: 17,
+    padding: 15,
     marginBottom: 10,
   },
   busIcon: {
@@ -87,7 +86,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   destination: {
-    marginLeft: 37,
+    // marginLeft: 37,
   },
   imageContainer: {
     flex: 1,

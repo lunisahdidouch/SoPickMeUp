@@ -44,7 +44,7 @@ function MyTabs() {
       }} 
       />
       <Tab.Screen 
-      name="Alle carpools" 
+      name="Alle carpools"
       // component={withBackground(HomeScreen)} 
       component={HomeScreen} 
       options={{
