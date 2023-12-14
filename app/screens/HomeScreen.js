@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Button, StyleSheet } from 'react-native';
 import Carpool from '../models/Carpool';
 import CarpoolDetails from '../models/CarpoolDetails';
-import { saveCarpool } from '../services/storageUtil';
+import { saveCarpool } from '../services/storageService';
 import TextField from '..//components/TextField';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DatePicker from '../components/DatePicker';
@@ -18,8 +18,8 @@ const HomeScreen = () => {
       starterLocation: '',
       endLocation: '',
       tripDuration: '',
-      departureDate: '',
-      departureTime: '',
+      departureDate: new Date().toLocaleDateString(),
+      departureTime: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       arrivalTime: '',
       rideType: '',
       availableSeats: ''
@@ -68,19 +68,14 @@ const HomeScreen = () => {
           />
           <View style={styles.pickers}>
             <DatePicker
-              value={formData.departureDate}
+              value={new Date(formData.departureDate)}
               onDateChange={(selectedDate) => handleInputChange('departureDate', selectedDate.toLocaleDateString())}
             />
             <TimePicker
-              value={formData.departureTime}
+              value={new Date(`${formData.departureTime}`)}
               onTimeChange={(selectedTime) => handleInputChange('departureTime', selectedTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }))}
             />
           </View>
-          {/* <TextField
-              placeholder="Ride Type"
-              value={formData.rideType}
-              onChangeText={(text) => handleInputChange('rideType', text)}
-          /> */}
           <AvailableSeats
             value={formData.availableSeats}
             onChangeText={(text) => handleInputChange('availableSeats', text)}

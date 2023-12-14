@@ -13,9 +13,6 @@ import CustomHeader from './app/components/CustomHeader';
 import Background from './app/components/BackgroundShapes';
 import withBackground from './app/components/ScreenWithBackground';
 
-
-
-
 const Tab = createBottomTabNavigator();
 
 function MyTabs() {

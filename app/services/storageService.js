@@ -8,7 +8,7 @@ export const saveCarpool = async (newCarpool, newCarpoolDetails, departureDate) 
       let savedCarpools = await fetchCarpools();
       console.log(newCarpoolDetails);
       // console.log('First initialization- ' + savedCarpools);
-      savedCarpools[departureDate] =  addToList(newCarpool, newCarpoolDetails, savedCarpools );
+      savedCarpools[departureDate] =  addToList(newCarpool, newCarpoolDetails, savedCarpools, departureDate );
       // console.log('Second initialization- ' + savedCarpools);
       await saveCarpools(savedCarpools);
 
