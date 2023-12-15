@@ -11,6 +11,15 @@ module.exports = {
   ],
   theme: {
     extend: {},
+    colors: {
+      transparent: 'transparent',
+      current: 'currentColor',
+      'dark_main': '#0070AD',
+      'light_main': '#12B3DB',
+      'orange_accent': '#FF4411',
+      'grey_accent': '#686666',
+      'red_accent': '#FF0000',
+    },
   },
   plugins: [],
 }

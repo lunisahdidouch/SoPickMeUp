@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Button, StyleSheet } from 'react-native';
+import { View, Button, StyleSheet, Text } from 'react-native';
 import Carpool from '../models/Carpool';
 import CarpoolDetails from '../models/CarpoolDetails';
 import { saveCarpool } from '../services/storageService';
@@ -8,7 +8,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import DatePicker from '../components/DatePicker';
 import TimePicker from '../components/TimePicker';
 import AvailableSeats from '../components/AvailableSeats';
-import RideOptions from '../components/RideOptions';
+import DropDown from '../components/DropDown';
+import randomValue from '../utils/randomValue';
+import CustomButton from '../components/CustomButton';
 
 
 
@@ -21,15 +23,21 @@ const HomeScreen = () => {
       departureDate: new Date().toLocaleDateString(),
       departureTime: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       arrivalTime: '',
-      rideType: '',
-      availableSeats: ''
+      rideType: 'false',
+      availableSeats: '1',
+      nameVisibility: 'false',
   });
 
-  const pickerItems = [
+  const rideItems = [
     { label: 'Heen', value: 'false'},
     { label: 'Heen en terug', value: 'true'},
   ];
 
+  const visibilityItems = [
+    { label: 'Anoniem', value: 'false'},
+    { label: 'Zichtbaar', value: 'true'},
+  ];
+ 
   const deleteCarpools = async () => {
     try {
         await AsyncStorage.removeItem('carpoolsByDate');
@@ -45,11 +53,14 @@ const HomeScreen = () => {
       setFormData({ ...formData, [name]: value });
   };
 
+  
+
   const handleSubmit = () => {
-    const { starterLocation, endLocation, departureDate, departureTime, availableSeats, rideType, comment } = formData;
-    const userId = '5';
+    const { starterLocation, endLocation, departureDate, departureTime, availableSeats, rideType, nameVisibility, comment } = formData;
+    const userId = randomValue(4);
+    console.log("User ID: " + userId);
     const newCarpool = new Carpool(userId, starterLocation, endLocation);
-    const newCarpoolDetails = new CarpoolDetails(newCarpool.carpoolId, departureTime, availableSeats, rideType, comment);
+    const newCarpoolDetails = new CarpoolDetails(newCarpool.carpoolId, departureTime, availableSeats, rideType, nameVisibility, comment);
   
     saveCarpool(newCarpool, newCarpoolDetails, departureDate);
 
@@ -80,15 +91,30 @@ const HomeScreen = () => {
             value={formData.availableSeats}
             onChangeText={(text) => handleInputChange('availableSeats', text)}
           />
-          <RideOptions
-            items={pickerItems}
-            defaultValue={pickerItems[0].value}
+          <DropDown
+            items={rideItems}
+            defaultValue={rideItems[0].value}
             name="rideType"
             mainValue={formData.rideType}
             handleInputChange={handleInputChange}
           />
-          <Button styles={styles.createCarpool} title="Create Carpool" onPress={handleSubmit} />
-          <Button styles={styles.createCarpool} title="Delete Carpools" onPress={deleteCarpools} />
+          <Text style={styles.title}>Naam zichtbaarheid</Text>
+          <DropDown
+            items={visibilityItems}
+            defaultValue={visibilityItems[0].value}
+            name="nameVisibility"
+            mainValue={formData.nameVisibility}
+            handleInputChange={handleInputChange}
+          />
+          <View className="items-center mt-5">
+            <CustomButton
+            backgroundColor="transparent"
+            borderColor='#0070AD'
+            textColor='#0070AD'
+            onPress={handleSubmit}
+            title="Maak carpool aan"
+            />
+          </View>
       </View>
   );
 };
@@ -96,7 +122,7 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
       flex: 1,
-      padding: 20
+      padding: 20,
   },
   createCarpool:{
     marginTop: 20
@@ -107,6 +133,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     width: 363,
+  },
+  title: {
+    fontSize: 20,
+    marginBottom: 5,
+    marginLeft: 20,
+    marginTop: 10,
   },
 });
 

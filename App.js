@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import * as NavigationBar from 'expo-navigation-bar';
-import React, { Fragment } from 'react';
+import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import HomeScreen from './app/screens/HomeScreen';
@@ -8,12 +8,23 @@ import CreatedCarpools from './app/screens/CreatedCarpools';
 import JoinedCarpools from './app/screens/JoinedCarpools';
 import BusFrontIcon from './app/assets/BusFront';
 import SteeringWheelIcon from './app/assets/SteeringWheel';
+import { createStackNavigator } from '@react-navigation/stack';
 import BusSideIcon from './app/assets/BusSide';
 import CustomHeader from './app/components/CustomHeader';
 import Background from './app/components/BackgroundShapes';
 import withBackground from './app/components/ScreenWithBackground';
+import User from './app/models/User';
+import CarpoolApplication from './app/screens/CarpoolApplication';
+
 
 const Tab = createBottomTabNavigator();
+
+const currentUser = new User('Lunis');
+console.log(currentUser.userId);
+const Stack = createStackNavigator();
+
+
+
 
 function MyTabs() {
   return (
@@ -67,11 +78,27 @@ function MyTabs() {
   );
 }
 
+// function MyStack() {
+//   return (
+//     <Stack.Navigator>
+//       <Stack.Screen name="Home" component={MyTabs} />
+//       <Stack.Screen name="CarpoolDetails" component={CarpoolApplication} />
+//     </Stack.Navigator>
+//   );
+// }
+
+
 export default function App() {
   // const visibility = NavigationBar.useVisibility()
   return (
     <NavigationContainer>
-      <MyTabs />
+      {/* <MyStack /> */}
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={MyTabs}
+          options={{ headerShown: false }}
+          />
+        <Stack.Screen name="CarpoolDetails" component={CarpoolApplication} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
@@ -84,3 +111,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+export { currentUser }

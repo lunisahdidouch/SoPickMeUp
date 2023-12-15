@@ -39,7 +39,9 @@ const SeatPicker = (props, value, onChangeText) => {
 
 const styles = StyleSheet.create({
   container: {
-    margin: 20,
+    marginLeft: 20,
+    marginTop: 8,
+    marginBottom: 10,
   },
   title: {
     fontSize: 20,
