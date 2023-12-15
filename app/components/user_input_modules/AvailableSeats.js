@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import MinusIcon from '../assets/MinusIcon';
-import PlusIcon from '../assets/PlusIcon';
+import MinusIcon from '../../assets/MinusIcon';
+import PlusIcon from '../../assets/PlusIcon';
 
 const SeatPicker = (props, value, onChangeText) => {
   const [seats, setSeats] = useState(1);

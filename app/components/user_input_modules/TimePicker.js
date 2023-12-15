@@ -1,7 +1,7 @@
 import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 import React, { useState } from 'react';
 import { Text, Pressable, StyleSheet } from 'react-native';
-import ClockIcon from '../assets/ClockIcon';
+import ClockIcon from '../../assets/ClockIcon';
 
 export default function TimePicker(props, value, onChangeText) {
   const [time, setTime] = useState(new Date());

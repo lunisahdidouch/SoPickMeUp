@@ -1,15 +1,15 @@
 import { View, Text, Pressable, StyleSheet } from 'react-native'
 import React from 'react'
 
-const CustomButton = ({title, onPress, backgroundColor = '#0070AD', borderColor = '#0070AD',  textColor = '#fff'}) => {
+const CustomButton = ({title, onPress, backgroundColor = '#0070AD', borderColor = '#0070AD',  textColor = '#fff', width = 300, height = 50}) => {
   const styles = StyleSheet.create({
     button: {
       backgroundColor: backgroundColor,
       borderWidth: 1,
       borderColor: borderColor,
       borderRadius: 10,
-      height: 50,
-      width: 300,
+      height: height,
+      width: width,
       justifyContent: 'center',
       alignItems: 'center',
     },

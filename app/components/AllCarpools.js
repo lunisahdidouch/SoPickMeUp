@@ -3,9 +3,8 @@ import CarpoolCard from './CarpoolCard';
 
 
 const ViewCarpools = ({carpools, fetchCarpools}) => {
-
     return(
-        <ScrollView>
+        <ScrollView className="mb-6">
           {Object.entries(carpools).map(([date, carpoolsList]) => (
             <View key={date}>
               <Text className="ml-9 mb-2 font-bold text-base">{date}</Text>
@@ -16,7 +15,6 @@ const ViewCarpools = ({carpools, fetchCarpools}) => {
               ))}
             </View>
           ))}
-          <Button title="Refresh carpools" onPress={fetchCarpools} />
         </ScrollView>
 )};
 

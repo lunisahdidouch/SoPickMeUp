@@ -39,6 +39,8 @@ const CarpoolCard = ({ carpoolDate, carpoolDetails }) => {
   generateBoxShadowStyle(-2, 4, 'black', 0.2, 3, 6, 'black');
 
   const navigation = useNavigation();
+  // carpoolDetails.details.passengers.push({name: 'Lunis'});
+  // console.log(carpoolDetails.details.passengers)
 
   const handlePress = () => {
     navigation.navigate('CarpoolDetails', { carpoolDetails, carpoolDate });

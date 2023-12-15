@@ -2,11 +2,40 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Image } from 'expo-image';
 import CustomButton from '../components/CustomButton';
+import randomValue from '../utils/randomValue';
+import { saveCarpool } from '../services/storageService';
+import { fetchCarpools } from '../services/fetchCarpools';
+import { saveCarpools } from '../services/saveCarpools';
+
+
+const ApplyToCarpool = async (carpoolDetails, carpoolDate) => {
+  // const allCarpools = await fetchCarpools();
+  // const specificCarpool = allCarpools[carpoolDate].find(carpoolDetails.details.carpoolId);
+  
+  console.log("test");
+  // try{
+  //   const carpoolToUpdate = allCarpools;
+  //   console.log(carpoolToUpdate.passengers);
+  // }
+  // catch(error){
+  //   console.log("Could not find carpool" + error);
+  // }
+
+  if (!carpoolDetails.details.passengers) {
+    carpoolDetails.details.passengers = [];
+  }
+  const randomId = randomValue(6, 15);
+  carpoolDetails.details.passengers.push(randomId);
+  console.log("test 2");
+  console.log(carpoolDetails.details.passengers[0])
+  // console.log(carpoolDetails.details.passengers);
+  saveCarpool(carpoolDetails, carpoolDetails.details, carpoolDate);
+}
 
 
 const ChosenCarpool = ({ route }) => {
   const { carpoolDetails, carpoolDate } = route.params;
-
+  // console.log(carpoolDetails.details.passengers[0])
   return (
     <View className="mt-10 ml-3">
       <Text className="font-extrabold text-2xl mb-3 ">Overzicht</Text>
@@ -15,7 +44,7 @@ const ChosenCarpool = ({ route }) => {
 
       <View style={styles.card}>
         <Text className="mr-1 max-w-[50] w-10 font-extrabold">{carpoolDetails.details.departureTime}</Text>
-        <View style={styles.imageContainer} className="">
+        <View className="">
           <Image
             style={styles.routeIcon}
             source={require('../assets/RouteIcon.png')}
@@ -26,7 +55,7 @@ const ChosenCarpool = ({ route }) => {
         </View>
         <View>
           <View>
-            <View className="ml-1 w-16">
+            <View className="ml-1 w-50">
               <Text>{carpoolDetails.starterLocation}</Text>
               <Text className="mt-6" style={styles.destination}>{carpoolDetails.endLocation}</Text>
             </View>
@@ -34,15 +63,46 @@ const ChosenCarpool = ({ route }) => {
         </View>
       </View>
       <View className="flex flex-column justify-center">
-        <Text className="ml-3">Vrije plaatsen:</Text>
-        <Text className="ml-14 text-dark_main font-bold text-xl">{carpoolDetails.details.availableSeats}</Text>
+        <Text className="ml-3 font-extrabold text-xl">Vrije plaatsen:</Text>
+        <Text className="ml-5 text-xl">{carpoolDetails.details.availableSeats}</Text>
+      </View>
+      <View className="flex flex-column justify-center">
+        <Text className="ml-3 font-extrabold text-xl">Chauffeur:</Text>
+        <Text className="ml-3 mt-2">{carpoolDetails.details.driverName}</Text>
+      </View>
+      {/* <View className="flex flex-column justify-center">
+        <Text className="ml-3 font-extrabold text-xl">Opmerking:</Text>
+        <Text className="ml-3 mt-2">{carpoolDetails.details.comment}</Text>
+      </View> */}
+      <View>
+        {
+          carpoolDetails.passengers && Object.entries(carpoolDetails.passengers).length === 0 ? (
+            <View>
+              <Text>No passengers</Text>
+            </View>
+            ) : (
+              carpoolDetails.passengers && Object.entries(carpoolDetails.passengers).map((passenger) => (
+                <View key={passenger[0]}>
+                <Text className="ml-3 font-extrabold text-xl">Passengers:</Text>
+                <Text className="ml-3 mt-2">{passenger[1]}</Text>
+              </View>
+            ))
+            )
+            
+        }
+        </View>
+
+      <View className="flex flex-column justify-center">
+        <Text className="ml-3 font-extrabold text-xl">Opmerking:</Text>
+        <Text className="ml-3 mt-2">{carpoolDetails.details.passengers}</Text>
       </View>
       <View className="items-center mt-5">
             <CustomButton
             backgroundColor="transparent"
             borderColor='#0070AD'
             textColor='#0070AD'
-            title="Maak carpool aan"
+            title="Aanmelden"
+            onPress={() => ApplyToCarpool(carpoolDetails, carpoolDate)}
             />
           </View>
     </View>
@@ -73,13 +133,6 @@ const styles = StyleSheet.create({
   destination: {
     marginLeft: 0,
     maxWidth: 100
-  },
-  imageContainer: {
-    // flex: 1,
-    // backgroundColor: 'transparent',
-    // alignItems: 'center',
-    // justifyContent: 'center',
-    // marginRight: 10,
   },
   routeIcon: {
     flex: 1,

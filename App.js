@@ -3,9 +3,9 @@ import * as NavigationBar from 'expo-navigation-bar';
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
-import HomeScreen from './app/screens/HomeScreen';
+import AvailableCarpools from './app/screens/AvailableCarpools';
 import CreatedCarpools from './app/screens/CreatedCarpools';
-import JoinedCarpools from './app/screens/JoinedCarpools';
+import PlannedRides from './app/screens/PlannedRides';
 import BusFrontIcon from './app/assets/BusFront';
 import SteeringWheelIcon from './app/assets/SteeringWheel';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -15,12 +15,14 @@ import Background from './app/components/BackgroundShapes';
 import withBackground from './app/components/ScreenWithBackground';
 import User from './app/models/User';
 import CarpoolApplication from './app/screens/CarpoolApplication';
+import UserContext from './app/services/UserContext';
+
 
 
 const Tab = createBottomTabNavigator();
 
 const currentUser = new User('Lunis');
-console.log(currentUser.userId);
+console.log(currentUser.name);
 const Stack = createStackNavigator();
 
 
@@ -57,7 +59,7 @@ function MyTabs() {
       <Tab.Screen 
       name="Alle carpools"
       // component={withBackground(HomeScreen)} 
-      component={HomeScreen} 
+      component={AvailableCarpools} 
       options={{
         tabBarIcon: ({ focused, color, size }) => (
           <BusFrontIcon width={40} height={40} color={focused ? "#12B3DB" : "#0070AD"} />
@@ -67,7 +69,7 @@ function MyTabs() {
       <Tab.Screen 
       name="Meerijden" 
       // component={withBackground(JoinedCarpools)} 
-      component= {JoinedCarpools}
+      component= {PlannedRides}
       options={{
         tabBarIcon: ({ focused, color, size }) => (
           <BusSideIcon width={50} height={50} color={focused ? "#12B3DB" : "#0070AD"} />
@@ -91,15 +93,17 @@ function MyTabs() {
 export default function App() {
   // const visibility = NavigationBar.useVisibility()
   return (
-    <NavigationContainer>
-      {/* <MyStack /> */}
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={MyTabs}
-          options={{ headerShown: false }}
-          />
-        <Stack.Screen name="CarpoolDetails" component={CarpoolApplication} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <UserContext.Provider value={currentUser}>
+      <NavigationContainer>
+        {/* <MyStack /> */}
+        <Stack.Navigator>
+          <Stack.Screen name="Home" component={MyTabs}
+            options={{ headerShown: false }}
+            />
+          <Stack.Screen name="CarpoolDetails" component={CarpoolApplication} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </UserContext.Provider>
   );
 }
 
@@ -111,5 +115,3 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-
-export { currentUser }

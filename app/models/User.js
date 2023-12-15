@@ -4,9 +4,9 @@ import randomValue from '../utils/randomValue';
 
 
 class User {
-  constructor(userName) {
-    this.userId = randomValue(4);
-    this.userName = userName;
+  constructor(name) {
+    this.userId = randomValue(1, 5);
+    this.name = name;
   }
 }
 
