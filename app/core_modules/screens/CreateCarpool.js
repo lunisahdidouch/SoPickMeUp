@@ -3,18 +3,18 @@ import { View, ScrollView, StyleSheet, Text } from 'react-native';
 import Carpool from '../models/Carpool';
 import CarpoolDetails from '../models/CarpoolDetails';
 import { saveCarpool } from '../services/storageService';
-import TextField from '../components/user_input_modules/TextField';
+import TextField from '../../user_input_modules/components/TextField';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import DatePicker from '../components/user_input_modules/DatePicker';
-import TimePicker from '../components/user_input_modules/TimePicker';
-import AvailableSeats from '../components/user_input_modules/AvailableSeats';
-import DropDown from '../components/user_input_modules/DropDown';
+import DatePicker from '../../user_input_modules/components/DatePicker';
+import TimePicker from '../../user_input_modules/components/TimePicker';
+import AvailableSeats from '../../user_input_modules/components/AvailableSeats';
+import DropDown from '../../user_input_modules/components/DropDown';
 import randomValue from '../utils/randomValue';
 import CustomButton from '../components/CustomButton';
-import UserContext from '../services/UserContext';
+import UserContext from '../../user_modules/services/UserContext';
 
 
-const AvailableCarpools = () => {
+const CreateCarpool = () => {
   const [formData, setFormData] = useState({
       starterLocation: '',
       endLocation: '',
@@ -40,8 +40,6 @@ const AvailableCarpools = () => {
 
   let driverName = 'Anoniem';
   const currentUser = useContext(UserContext);
-  // console.log(currentUser.name);
-
  
   const deleteCarpools = async () => {
     try {
@@ -54,7 +52,7 @@ const AvailableCarpools = () => {
 
 
   const handleInputChange = (name, value) => {
-      console.log("Values: " + name, value);
+      // console.log("Values: " + name, value);
       setFormData({ ...formData, [name]: value });
   };
 
@@ -62,7 +60,7 @@ const AvailableCarpools = () => {
 
   const handleSubmit = () => {
     const { starterLocation, endLocation, departureDate, departureTime, availableSeats, rideType, nameVisibility, comment } = formData;
-    const userId = randomValue(4);
+    const userId = randomValue(1, 5);
     console.log("User ID: " + userId);
 
     if(nameVisibility === 'true') {
@@ -75,8 +73,8 @@ const AvailableCarpools = () => {
 
   };
   return (
-    <ScrollView>
-      <View style={styles.container}>
+    <ScrollView style={styles.container}>
+      {/* <View style={styles.container}> */}
         <TextField
             placeholder="Vertrek plaats"
             value={formData.starterLocation}
@@ -142,7 +140,7 @@ const AvailableCarpools = () => {
           title="Verwijder carpools"
           />
         </View>
-      </View>
+      {/* </View> */}
     </ScrollView>
 
   );
@@ -171,4 +169,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AvailableCarpools
+export default CreateCarpool

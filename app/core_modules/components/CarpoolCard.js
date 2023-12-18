@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import BusFront from '../assets/BusFront';
-import ChevronRight from '../assets/ChevronRight';
+import BusFront from '../../assets/BusFront';
+import ChevronRight from '../../assets/ChevronRight';
 import { Image } from 'expo-image';
 import { TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -56,7 +56,7 @@ const CarpoolCard = ({ carpoolDate, carpoolDetails }) => {
         <View style={styles.imageContainer} className="">
           <Image
             style={styles.routeIcon}
-            source={require('../assets/RouteIcon.png')}
+            source={require('../../assets/RouteIcon.png')}
             // placeholder={blurhash}
             contentFit="cover"
             transition={1000}

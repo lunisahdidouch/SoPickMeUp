@@ -2,7 +2,7 @@ import { View, Text, Button, StyleSheet, ScrollView } from 'react-native';
 import CarpoolCard from './CarpoolCard';
 
 
-const ViewCarpools = ({carpools, fetchCarpools}) => {
+const ViewCarpools = ({carpools}) => {
     return(
         <ScrollView className="mb-6">
           {Object.entries(carpools).map(([date, carpoolsList]) => (

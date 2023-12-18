@@ -3,21 +3,24 @@ import * as NavigationBar from 'expo-navigation-bar';
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
-import AvailableCarpools from './app/screens/AvailableCarpools';
-import CreatedCarpools from './app/screens/CreatedCarpools';
-import PlannedRides from './app/screens/PlannedRides';
+import CreateCarpool from './app/core_modules/screens/CreateCarpool';
+import CreatedCarpools from './app/core_modules/screens/CreatedCarpools';
+import PlannedRides from './app/core_modules/screens/PlannedRides';
+import JoinedRides from './app/core_modules/screens/JoinedRides';
 import BusFrontIcon from './app/assets/BusFront';
 import SteeringWheelIcon from './app/assets/SteeringWheel';
 import { createStackNavigator } from '@react-navigation/stack';
 import BusSideIcon from './app/assets/BusSide';
-import CustomHeader from './app/components/CustomHeader';
-import Background from './app/components/BackgroundShapes';
-import withBackground from './app/components/ScreenWithBackground';
-import User from './app/models/User';
-import CarpoolApplication from './app/screens/CarpoolApplication';
-import UserContext from './app/services/UserContext';
-
-
+import CustomHeader from './app/core_modules/components/CustomHeader';
+import Background from './app/core_modules/components/BackgroundShapes';
+import withBackground from './app/core_modules/components/ScreenWithBackground';
+import User from './app/user_modules/models/User';
+import CarpoolApplication from './app/core_modules/screens/CarpoolApplication';
+import UserContext from './app/user_modules/services/UserContext';
+// import DrawerMenu from './app/core_modules/components/Drawer';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import ChangeLanguage from './app/core_modules/screens/ChangeLanguage';
+import DrawerView from './app/core_modules/components/Drawer';
 
 const Tab = createBottomTabNavigator();
 
@@ -25,8 +28,16 @@ const currentUser = new User('Lunis');
 console.log(currentUser.name);
 const Stack = createStackNavigator();
 
+const Drawer = createDrawerNavigator();
 
+// function AppDrawerStack() {
+//   return (
+//       <Drawer.Navigator drawerContent={props => <DrawerView {...props} />}>
+//           <Drawer.Screen name='AppBottomStack' component={AppBottomStack} />
+//       </Drawer.Navigator>
+//   )
 
+// }
 
 function MyTabs() {
   return (
@@ -43,65 +54,72 @@ function MyTabs() {
         fontSize: 16,
         marginBottom: 3,
       },
-      header: () => <CustomHeader />,
     }}
     >
       <Tab.Screen 
       name="Mijn carpools" 
-      // component={withBackground(CreatedCarpools)}
       component={CreatedCarpools}
       options={{
         tabBarIcon: ({ focused, color, size }) => (
           <SteeringWheelIcon width={40} height={40} color = {focused ? "#12B3DB" : "#0070AD"} />
           ),
+        header: () => <CustomHeader name = "Mijn carpools" showHamburger={true}/>,
       }} 
       />
       <Tab.Screen 
       name="Alle carpools"
-      // component={withBackground(HomeScreen)} 
-      component={AvailableCarpools} 
+      component={PlannedRides} 
       options={{
         tabBarIcon: ({ focused, color, size }) => (
           <BusFrontIcon width={40} height={40} color={focused ? "#12B3DB" : "#0070AD"} />
         ),
+        header: () => <CustomHeader name = "Alle carpools" showHamburger={true}/>,
       }}
       />
       <Tab.Screen 
       name="Meerijden" 
-      // component={withBackground(JoinedCarpools)} 
-      component= {PlannedRides}
+      component= {JoinedRides}
       options={{
         tabBarIcon: ({ focused, color, size }) => (
           <BusSideIcon width={50} height={50} color={focused ? "#12B3DB" : "#0070AD"} />
         ),
+        header: () => <CustomHeader name = "Meerijden" showHamburger={true}/>,
       }}
       />
     </Tab.Navigator>
   );
 }
 
-// function MyStack() {
-//   return (
-//     <Stack.Navigator>
-//       <Stack.Screen name="Home" component={MyTabs} />
-//       <Stack.Screen name="CarpoolDetails" component={CarpoolApplication} />
-//     </Stack.Navigator>
-//   );
-// }
-
+function CarpoolStack() {
+  return (
+    <Stack.Navigator>
+    <Stack.Screen name="Home" component={MyTabs}
+      options={{ headerShown: false }}
+      />
+    <Stack.Screen 
+      name="CarpoolDetails" 
+      component={CarpoolApplication} />
+    <Stack.Screen 
+      name="Carpool aanmaken" 
+      component={CreateCarpool}
+      options={{
+        header: (props) => <CustomHeader {...props} name = "Carpool aanmaken" showHamburger={false} />,
+      }}          
+      />
+  </Stack.Navigator>
+  )
+}
 
 export default function App() {
   // const visibility = NavigationBar.useVisibility()
   return (
     <UserContext.Provider value={currentUser}>
       <NavigationContainer>
-        {/* <MyStack /> */}
-        <Stack.Navigator>
-          <Stack.Screen name="Home" component={MyTabs}
-            options={{ headerShown: false }}
-            />
-          <Stack.Screen name="CarpoolDetails" component={CarpoolApplication} />
-        </Stack.Navigator>
+        <Drawer.Navigator 
+          drawerContent={props => <DrawerView {...props}/>}   
+          screenOptions={{ headerShown: false }}>
+          <Drawer.Screen name="CarpoolStack" component={CarpoolStack} />
+        </Drawer.Navigator>
       </NavigationContainer>
     </UserContext.Provider>
   );

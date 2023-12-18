@@ -9,26 +9,14 @@ import { saveCarpools } from '../services/saveCarpools';
 
 
 const ApplyToCarpool = async (carpoolDetails, carpoolDate) => {
-  // const allCarpools = await fetchCarpools();
-  // const specificCarpool = allCarpools[carpoolDate].find(carpoolDetails.details.carpoolId);
-  
-  console.log("test");
-  // try{
-  //   const carpoolToUpdate = allCarpools;
-  //   console.log(carpoolToUpdate.passengers);
-  // }
-  // catch(error){
-  //   console.log("Could not find carpool" + error);
-  // }
-
   if (!carpoolDetails.details.passengers) {
     carpoolDetails.details.passengers = [];
   }
-  const randomId = randomValue(6, 15);
+  const randomId = randomValue(6, 9);
+  console.log("Random Id check: " +  randomId);
   carpoolDetails.details.passengers.push(randomId);
-  console.log("test 2");
-  console.log(carpoolDetails.details.passengers[0])
-  // console.log(carpoolDetails.details.passengers);
+  // console.log("test 2");
+  // console.log(carpoolDetails.details.passengers[0])
   saveCarpool(carpoolDetails, carpoolDetails.details, carpoolDate);
 }
 
@@ -47,7 +35,7 @@ const ChosenCarpool = ({ route }) => {
         <View className="">
           <Image
             style={styles.routeIcon}
-            source={require('../assets/RouteIcon.png')}
+            source={require('../../assets/RouteIcon.png')}
             // placeholder={blurhash}
             contentFit="cover"
             transition={1000}
@@ -70,10 +58,6 @@ const ChosenCarpool = ({ route }) => {
         <Text className="ml-3 font-extrabold text-xl">Chauffeur:</Text>
         <Text className="ml-3 mt-2">{carpoolDetails.details.driverName}</Text>
       </View>
-      {/* <View className="flex flex-column justify-center">
-        <Text className="ml-3 font-extrabold text-xl">Opmerking:</Text>
-        <Text className="ml-3 mt-2">{carpoolDetails.details.comment}</Text>
-      </View> */}
       <View>
         {
           carpoolDetails.passengers && Object.entries(carpoolDetails.passengers).length === 0 ? (

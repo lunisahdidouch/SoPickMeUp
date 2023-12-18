@@ -1,12 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const CreatedCarpools = () => {
+const ChangeLanguage = () => {
   return (
     <View>
-      <Text>Mijn Carpools</Text>
+      <Text>ChangeLanguage</Text>
     </View>
   )
 }
 
-export default CreatedCarpools
+export default ChangeLanguage

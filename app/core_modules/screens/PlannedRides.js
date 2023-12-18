@@ -14,10 +14,9 @@ const PlannedRides = () => {
     const refreshCarpools = async () => {
         const fetchedCarpools = await fetchCarpools();
         setCarpools(fetchedCarpools);
-        // console.log(fetchedCarpools);
     }
     const handleCreateCarpoolPress = () => {
-        navigation.navigate('Alle carpools');
+        navigation.navigate('Carpool aanmaken');
     };
 
     useEffect( () => {

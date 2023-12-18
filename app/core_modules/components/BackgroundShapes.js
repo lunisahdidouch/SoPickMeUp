@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import ShapeTop from '../assets/ShapeTop';
-import ShapeBottom from '../assets/ShapeBottom';
+import ShapeTop from '../../assets/ShapeTop';
+import ShapeBottom from '../../assets/ShapeBottom';
 
 const Background = ({ children }) => {
   return (

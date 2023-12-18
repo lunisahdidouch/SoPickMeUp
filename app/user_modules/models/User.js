@@ -1,6 +1,6 @@
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
-import randomValue from '../utils/randomValue';
+import randomValue from '../../core_modules/utils/randomValue';
 
 
 class User {
