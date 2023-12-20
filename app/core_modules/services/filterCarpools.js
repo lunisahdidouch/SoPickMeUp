@@ -1,26 +1,23 @@
-import { View, Text, Button, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import ExpandedCarpoolCard from '../components/ExpandedCarpoolCard';
 import CarpoolCard from '../components/CarpoolCard';
 
 
 const FilterCreatedCarpools = ({carpools}) => {
-  console.log('1: Displayed carpools belong to User Id: ', carpools[1]);
     return(
         <ScrollView className="mb-6 mt-20">
           {Object.entries(carpools).map(([date, carpoolsList]) => (
             <View key={date}>
               {carpoolsList.map((carpoolDetails, index) => {
-                {console.log('2: Displayed carpools belong to User Id: ', carpoolDetails.userId)}
                 if (carpoolDetails.userId === 3) {
-                  console.log('3: Displayed carpools belong to User Id: ', carpoolDetails.userId);
                   return (
                     <View key={`${carpoolDetails.date}-${index}`}>
                       <Text className="ml-9 mb-2 font-bold text-base">{date}</Text>
                       <View style={styles.container}>
-                        <CarpoolCard carpoolDetails={carpoolDetails} carpoolDate ={date} />
+                        <ExpandedCarpoolCard carpoolDetails={carpoolDetails} carpoolDate ={date} />
                       </View>
                     </View>
-                  )
-                }
+                  )}
               })}
             </View>
           ))}
@@ -28,7 +25,6 @@ const FilterCreatedCarpools = ({carpools}) => {
 )};
 
 const FilterJoinedCarpools = ({carpools}) => {
-  console.log('1: Displayed carpools belong to passenger Id: ', carpools[1]);
   return(
     <ScrollView className="mb-6 mt-20">
       {Object.entries(carpools).map(([date, carpoolsList]) => (
@@ -42,8 +38,7 @@ const FilterJoinedCarpools = ({carpools}) => {
                     <CarpoolCard carpoolDetails={carpoolDetails} carpoolDate ={date} />
                   </View>
                 </View>
-              )
-            } 
+              )} 
           })}
         </View>
       ))}

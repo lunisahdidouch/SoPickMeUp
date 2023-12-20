@@ -16,29 +16,32 @@ const PlannedRides = () => {
         setCarpools(fetchedCarpools);
     }
     const handleCreateCarpoolPress = () => {
-        navigation.navigate('Carpool aanmaken');
+        navigation.navigate('Carpool aanpassen', { carpoolDetails, carpoolDate });
     };
+    // const handlePress = () => {
+    //   navigation.navigate('CarpoolDetails', { carpoolDetails, carpoolDate });
+    // };
 
     useEffect( () => {
         refreshCarpools();
     }, []);
     return (
         <View>
-            <View className="items-center mt-5 mb-3 ml-2 absolute">
+             <View className="items-center mt-5 mb-3 ml-2 absolute">
                 <CustomButton
-                    title="Refresh"
-                    backgroundColor="transparent"
-                    borderColor='#0070AD'
-                    textColor='#0070AD'
-                    width={60}
-                    height={30}
-                    onPress={refreshCarpools}
+                  title="Refresh"
+                  backgroundColor="transparent"
+                  borderColor='#0070AD'
+                  textColor='#0070AD'
+                  width={60}
+                  height={30}
+                  onPress={refreshCarpools}
                 />
             </View>
             <FilterCreatedCarpools
-                carpools={carpools}
-                fetchCarpools={refreshCarpools}
-                />
+              carpools={carpools}
+              fetchCarpools={handleCreateCarpoolPress}
+            />
         </View>
 
   );

@@ -45,11 +45,10 @@ const PlannedRides = () => {
                     onPress={refreshCarpools}
                 />
             </View>
-            {/* <Button title="Refresh carpools" onPress={refreshCarpools} className="absolute"/> */}
             <ViewCarpools
-                carpools={carpools}
-                fetchCarpools={refreshCarpools}
-                />
+              carpools={carpools}
+              fetchCarpools={refreshCarpools}
+            />
         </View>
 
   );

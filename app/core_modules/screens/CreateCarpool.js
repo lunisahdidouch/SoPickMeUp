@@ -48,7 +48,7 @@ const CreateCarpool = () => {
     } catch (error) {
         console.error('Failed to delete carpools', error);
     }
-};
+  };
 
 
   const handleInputChange = (name, value) => {

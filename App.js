@@ -21,6 +21,8 @@ import UserContext from './app/user_modules/services/UserContext';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import ChangeLanguage from './app/core_modules/screens/ChangeLanguage';
 import DrawerView from './app/core_modules/components/Drawer';
+import EditCarpool from './app/core_modules/screens/EditCarpool';
+import CreatedCarpoolDetails from './app/core_modules/screens/CreatedCarpoolDetails';
 
 const Tab = createBottomTabNavigator();
 
@@ -29,6 +31,7 @@ console.log(currentUser.name);
 const Stack = createStackNavigator();
 
 const Drawer = createDrawerNavigator();
+
 
 // function AppDrawerStack() {
 //   return (
@@ -105,6 +108,20 @@ function CarpoolStack() {
       options={{
         header: (props) => <CustomHeader {...props} name = "Carpool aanmaken" showHamburger={false} />,
       }}          
+      />
+      <Stack.Screen
+      name="Carpool aanpassen"
+      component={EditCarpool}
+      options={{
+        header: (props) => <CustomHeader {...props} name = "Carpool aanpassen" showHamburger={false} />,
+      }}
+      />
+      <Stack.Screen
+      name="Carpool details"
+      component={CreatedCarpoolDetails}
+      options={{
+        header: (props) => <CustomHeader {...props} name = "Carpool details" showHamburger={false} />,
+      }}
       />
   </Stack.Navigator>
   )

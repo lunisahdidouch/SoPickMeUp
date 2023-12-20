@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import BusFront from '../../assets/BusFront';
 import ChevronRight from '../../assets/ChevronRight';
+import ExtendRouteIcon from '../../assets/ExtendRouteIcon';
 import { Image } from 'expo-image';
 import { TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -34,7 +35,7 @@ const generateBoxShadowStyle = (
 const blurhash =
   '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[';
 
-const CarpoolCard = ({ carpoolDate, carpoolDetails }) => {
+const ExpandedCarpoolCard = ({ carpoolDate, carpoolDetails }) => {
 
   generateBoxShadowStyle(-2, 4, 'black', 0.2, 3, 6, 'black');
 
@@ -42,7 +43,7 @@ const CarpoolCard = ({ carpoolDate, carpoolDetails }) => {
 
 
   const handlePress = () => {
-    navigation.navigate('CarpoolDetails', { carpoolDetails, carpoolDate });
+    navigation.navigate('Carpool aanpassen', { carpoolDetails, carpoolDate });
   };
 
   return (
@@ -52,31 +53,21 @@ const CarpoolCard = ({ carpoolDate, carpoolDetails }) => {
           <BusFront width="52" height="52" color="#0070AD" />
         </View>
         <Text className="mr-1 max-w-[50] w-10 font-extrabold">{carpoolDetails.details.departureTime}</Text>
-        <View style={styles.imageContainer} className="">
-          <Image
-            style={styles.routeIcon}
-            source={require('../../assets/RouteIcon.png')}
-            // placeholder={blurhash}
-            contentFit="cover"
-            transition={1000}
-            />
+        <View className="">
+            <ExtendRouteIcon width="30" height="90" color="transparent" color1="" color2="#D9D9D9" strokeColor="#686666" strokeColor1="#686666" strokeColor2="#686666" />
         </View>
         <View>
           <View style={styles.departureRow}>
             <View className="ml-1 w-16">
               <Text numberOfLines={1} ellipsizeMode='tail'  style={{ maxWidth: 100 }}>{carpoolDetails.starterLocation}</Text>
-              <Text numberOfLines={1} ellipsizeMode='tail' className="mt-6" style={styles.destination}>{carpoolDetails.endLocation}</Text>
+              <Text numberOfLines={1} ellipsizeMode='tail' className="mt-12" style={styles.destination}>{carpoolDetails.endLocation}</Text>
             </View>
-            <View className="flex flex-column justify-center">
-              <Text className="ml-3">Vrije plaatsen:</Text>
-              <Text className="ml-14 text-dark_main font-bold text-xl">{carpoolDetails.details.availableSeats}</Text>
-            </View>
-            <View className="justify-center">
+            <View className="justify-center ml-12 ">
               <ChevronRight 
                 color="transparent" 
                 strokeColor={"#686666"} 
-                width={25} 
-                height={25}
+                width={45} 
+                height={45}
                 />
             </View>
           </View>
@@ -94,8 +85,8 @@ const styles = StyleSheet.create({
     borderColor: '#000',
     borderRadius: 18,
     width: 350,
-    height: 100,
-    padding: 17,
+    height: 150,
+    padding: 25,
     marginBottom: 20,
     backgroundColor: '#fff',
   },
@@ -115,13 +106,6 @@ const styles = StyleSheet.create({
     marginLeft: 0,
     maxWidth: 100
   },
-  imageContainer: {
-    // flex: 1,
-    // backgroundColor: 'transparent',
-    // alignItems: 'center',
-    // justifyContent: 'center',
-    // marginRight: 10,
-  },
   routeIcon: {
     flex: 1,
     width: 23,
@@ -132,4 +116,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default CarpoolCard;
+export default ExpandedCarpoolCard;
