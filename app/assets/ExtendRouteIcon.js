@@ -17,3 +17,4 @@ export default function SvgComponent({width, height, color, color1, color2, stro
 
   return <SvgImage />;
 }
+

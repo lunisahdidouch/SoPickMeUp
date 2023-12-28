@@ -31,9 +31,6 @@ const generateBoxShadowStyle = (
   }
 };
 
-const blurhash =
-  '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[';
-
 const CarpoolCard = ({ carpoolDate, carpoolDetails }) => {
 
   generateBoxShadowStyle(-2, 4, 'black', 0.2, 3, 6, 'black');
@@ -42,7 +39,7 @@ const CarpoolCard = ({ carpoolDate, carpoolDetails }) => {
 
 
   const handlePress = () => {
-    navigation.navigate('CarpoolDetails', { carpoolDetails, carpoolDate });
+    navigation.navigate('Gekozen carpool', { carpoolDetails, carpoolDate });
   };
 
   return (
@@ -56,7 +53,6 @@ const CarpoolCard = ({ carpoolDate, carpoolDetails }) => {
           <Image
             style={styles.routeIcon}
             source={require('../../assets/RouteIcon.png')}
-            // placeholder={blurhash}
             contentFit="cover"
             transition={1000}
             />

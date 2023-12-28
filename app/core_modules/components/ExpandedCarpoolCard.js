@@ -32,25 +32,20 @@ const generateBoxShadowStyle = (
   }
 };
 
-const blurhash =
-  '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[';
-
-const ExpandedCarpoolCard = ({ carpoolDate, carpoolDetails }) => {
-
+const ExpandedCarpoolCard = ({ carpoolDate, carpoolDetails, screen }) => {
   generateBoxShadowStyle(-2, 4, 'black', 0.2, 3, 6, 'black');
-
+  
   const navigation = useNavigation();
 
-
   const handlePress = () => {
-    navigation.navigate('Carpool aanpassen', { carpoolDetails, carpoolDate });
+    navigation.navigate(`${screen}`, { carpoolDetails, carpoolDate });
   };
 
   return (
     <TouchableOpacity onPress={handlePress}>
       <View style={[styles.card, styles.boxShadow]} className="">
         <View style={styles.busIcon}>
-          <BusFront width="52" height="52" color="#0070AD" />
+          <BusFront width="67" height="67" color="#0070AD" />
         </View>
         <Text className="mr-1 max-w-[50] w-10 font-extrabold">{carpoolDetails.details.departureTime}</Text>
         <View className="">

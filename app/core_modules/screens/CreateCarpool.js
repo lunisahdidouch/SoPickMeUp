@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View, ScrollView, StyleSheet, Text } from 'react-native';
+import { View, ScrollView, StyleSheet, Text, Alert } from 'react-native';
 import Carpool from '../models/Carpool';
 import CarpoolDetails from '../models/CarpoolDetails';
 import { saveCarpool } from '../services/storageService';
@@ -58,9 +58,9 @@ const CreateCarpool = () => {
 
   
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const { starterLocation, endLocation, departureDate, departureTime, availableSeats, rideType, nameVisibility, comment } = formData;
-    const userId = randomValue(1, 5);
+    const userId = currentUser.currentUser.userId;
     console.log("User ID: " + userId);
 
     if(nameVisibility === 'true') {
@@ -69,8 +69,8 @@ const CreateCarpool = () => {
     const newCarpool = new Carpool(userId, starterLocation, endLocation);
     const newCarpoolDetails = new CarpoolDetails(newCarpool.carpoolId, departureTime, availableSeats, rideType, nameVisibility, driverName, comment);
   
-    saveCarpool(newCarpool, newCarpoolDetails, departureDate);
-
+    await saveCarpool(newCarpool, newCarpoolDetails, departureDate);
+    Alert.alert("Carpool is aangemaakt")
   };
   return (
     <ScrollView style={styles.container}>
@@ -131,7 +131,7 @@ const CreateCarpool = () => {
           title="Maak carpool aan"
           />
         </View>
-        <View className="items-center mt-5">
+        {/* <View className="items-center mt-5">
           <CustomButton
           backgroundColor="red"
           borderColor='red'
@@ -139,7 +139,7 @@ const CreateCarpool = () => {
           onPress={deleteCarpools}
           title="Verwijder carpools"
           />
-        </View>
+        </View> */}
       {/* </View> */}
     </ScrollView>
 

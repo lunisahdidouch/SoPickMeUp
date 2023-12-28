@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Alert } from 'react-native';
 import { Image } from 'expo-image';
 import CustomButton from '../components/CustomButton';
 import randomValue from '../utils/randomValue';
@@ -8,22 +8,21 @@ import { fetchCarpools } from '../services/fetchCarpools';
 import { saveCarpools } from '../services/saveCarpools';
 
 
-const ApplyToCarpool = async (carpoolDetails, carpoolDate) => {
+const CancelApplication = async (carpoolDetails, carpoolDate) => {
   if (!carpoolDetails.details.passengers) {
     carpoolDetails.details.passengers = [];
   }
   const randomId = randomValue(6, 9);
   console.log("Random Id check: " +  randomId);
   carpoolDetails.details.passengers.push(randomId);
-  // console.log("test 2");
-  // console.log(carpoolDetails.details.passengers[0])
   saveCarpool(carpoolDetails, carpoolDetails.details, carpoolDate);
+  Alert.alert("Van carpool afgemeld")
+
 }
 
 
 const ChosenCarpool = ({ route }) => {
   const { carpoolDetails, carpoolDate } = route.params;
-  // console.log(carpoolDetails.details.passengers[0])
   return (
     <View className="mt-10 ml-3">
       <Text className="font-extrabold text-2xl mb-3 ">Overzicht</Text>
@@ -83,10 +82,10 @@ const ChosenCarpool = ({ route }) => {
       <View className="items-center mt-5">
             <CustomButton
             backgroundColor="transparent"
-            borderColor='#0070AD'
-            textColor='#0070AD'
-            title="Aanmelden"
-            onPress={() => ApplyToCarpool(carpoolDetails, carpoolDate)}
+            borderColor='#FF0000'
+            textColor='#FF0000'
+            title="Afmelden"
+            onPress={() => CancelApplication(carpoolDetails, carpoolDate)}
             />
           </View>
     </View>

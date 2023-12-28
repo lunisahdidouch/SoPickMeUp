@@ -2,18 +2,18 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Image } from 'expo-image';
 import CustomButton from '../components/CustomButton';
+import randomValue from '../utils/randomValue';
+import { saveCarpool } from '../services/storageService';
 import { useNavigation } from '@react-navigation/native';
 
+const handlePress = (navigation, carpoolDetails, carpoolDate) => {
+  navigation.navigate('Aanvragen', { carpoolDetails, carpoolDate });
+};
 
-
-const CreatedCarpoolDetails = ({ route }) => {
+const ToBeJoinedCarpool = ({ route }) => {
   const { carpoolDetails, carpoolDate } = route.params;
-
   const navigation = useNavigation();
   
-  const handleCreateCarpoolPress = () => {
-    navigation.navigate('Carpool aanpassen', {carpoolDetails, carpoolDate});
-  };
   return (
     <View className="mt-10 ml-3">
       <Text className="font-extrabold text-2xl mb-3 ">Overzicht</Text>
@@ -48,6 +48,24 @@ const CreatedCarpoolDetails = ({ route }) => {
         <Text className="ml-3 font-extrabold text-xl">Chauffeur:</Text>
         <Text className="ml-3 mt-2">{carpoolDetails.details.driverName}</Text>
       </View>
+      <View>
+        {
+          carpoolDetails.passengers && Object.entries(carpoolDetails.passengers).length === 0 ? (
+            <View>
+              <Text>No passengers</Text>
+            </View>
+            ) : (
+              carpoolDetails.passengers && Object.entries(carpoolDetails.passengers).map((passenger) => (
+                <View key={passenger[0]}>
+                <Text className="ml-3 font-extrabold text-xl">Passengers:</Text>
+                <Text className="ml-3 mt-2">{passenger[1]}</Text>
+              </View>
+            ))
+            )
+            
+        }
+        </View>
+
       <View className="flex flex-column justify-center">
         <Text className="ml-3 font-extrabold text-xl">Opmerking:</Text>
         <Text className="ml-3 mt-2">{carpoolDetails.details.passengers}</Text>
@@ -57,8 +75,8 @@ const CreatedCarpoolDetails = ({ route }) => {
             backgroundColor="transparent"
             borderColor='#0070AD'
             textColor='#0070AD'
-            title="Aanpassen"
-            onPress={handleCreateCarpoolPress}
+            title="Aanmelden"
+            onPress={() => handlePress(navigation, carpoolDetails, carpoolDate)}
             />
           </View>
     </View>
@@ -100,4 +118,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default CreatedCarpoolDetails;
+export default ToBeJoinedCarpool;

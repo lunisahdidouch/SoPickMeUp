@@ -1,5 +1,5 @@
 // app/core_modules/screens/EditCarpool.js
-import { View, Text, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, Alert } from 'react-native';
 import React, { useState, useContext } from 'react';
 import { saveCarpool } from '../services/storageService';
 import { deleteCarpool } from '../services/deleteCarpool';
@@ -26,10 +26,6 @@ let driverName = 'Anoniem';
 //   // }, 4000);
 // };
 
-const handleInputChange = (name, value, setEditedCarpool) => {
-  // console.log("Values: " + name, value);
-  setEditedCarpool({ ...editedCarpool, [name]: value });
-};
 
 const EditCarpool = ({ route }) => {
   const { carpoolDetails, carpoolDate } = route.params;
@@ -48,16 +44,21 @@ const EditCarpool = ({ route }) => {
     { label: 'Anoniem', value: 'false'},
     { label: 'Zichtbaar', value: 'true'},
   ];
-
+  
   let newDate = carpoolDate;
-
+  
   // console.log("Carpool details: " + JSON.stringify(carpoolDetails.departureTime));
   // console.log("Carpool details 123: " + JSON.stringify(carpoolDetails.details.departureTime));
-
-
+  
+  
   const handleInputChangeDetails = (name, value) => {
     // console.log("Values: " + name, value);
     setEditedCarpoolDetails({ ...editedCarpoolDetails, [name]: value });
+  };
+  
+  const handleInputChange = (name, value) => {
+    // console.log("Values: " + name, value);
+    setEditedCarpool({ ...editedCarpool, [name]: value });
   };
 
   const handleSubmit = async () => {
@@ -68,6 +69,8 @@ const EditCarpool = ({ route }) => {
     // console.log("Edited carpool: " + JSON.stringify(editedCarpool) + "-------------" + JSON.stringify(editedCarpool.details.departureTime));
     await saveCarpool(editedCarpool, editedCarpoolDetails, date);
     await deleteCarpool(carpoolDetails.carpoolId, carpoolDate);
+    Alert.alert("Carpool is aangepast")
+
   };
 
 
@@ -77,12 +80,12 @@ const EditCarpool = ({ route }) => {
         <TextField
             placeholder="Vertrek plaats"
             value={editedCarpool.starterLocation}
-            onChangeText={(text) => handleInputChange('starterLocation', text, this.setEditedCarpool)}
+            onChangeText={(text) => handleInputChange('starterLocation', text)}
         />
         <TextField
             placeholder="Bestemming"
             value={editedCarpool.endLocation}
-            onChangeText={(text) => handleInputChange('endLocation', text, this.setEditedCarpool)}
+            onChangeText={(text) => handleInputChange('endLocation', text)}
         />
         <View style={styles.pickers}>
           <DatePicker

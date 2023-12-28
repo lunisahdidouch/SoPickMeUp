@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextInput, StyleSheet } from 'react-native';
 
-const TextField = ({ placeholder, value, onChangeText, keyboardType, multiline, height="45"}) => {
+const TextField = ({ placeholder, value, onChangeText, keyboardType, multiline, height="45", secureTextEntry = false}) => {
   const styles = StyleSheet.create({
     input: {
       height: height,
@@ -22,6 +22,7 @@ const TextField = ({ placeholder, value, onChangeText, keyboardType, multiline, 
       onChangeText={onChangeText}
       keyboardType={keyboardType}
       multiline={multiline}
+      secureTextEntry= {secureTextEntry}
     />
   );
 };

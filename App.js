@@ -1,6 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
-import * as NavigationBar from 'expo-navigation-bar';
-import React from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import CreateCarpool from './app/core_modules/screens/CreateCarpool';
@@ -12,35 +10,40 @@ import SteeringWheelIcon from './app/assets/SteeringWheel';
 import { createStackNavigator } from '@react-navigation/stack';
 import BusSideIcon from './app/assets/BusSide';
 import CustomHeader from './app/core_modules/components/CustomHeader';
-import Background from './app/core_modules/components/BackgroundShapes';
-import withBackground from './app/core_modules/components/ScreenWithBackground';
-import User from './app/user_modules/models/User';
 import CarpoolApplication from './app/core_modules/screens/CarpoolApplication';
-import UserContext from './app/user_modules/services/UserContext';
-// import DrawerMenu from './app/core_modules/components/Drawer';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import ChangeLanguage from './app/core_modules/screens/ChangeLanguage';
 import DrawerView from './app/core_modules/components/Drawer';
 import EditCarpool from './app/core_modules/screens/EditCarpool';
 import CreatedCarpoolDetails from './app/core_modules/screens/CreatedCarpoolDetails';
+import ToBeJoinedCarpool from './app/core_modules/screens/ToBeJoinedCarpool';
+import ApplyToCarpool from './app/core_modules/screens/ApplyToCarpool';
+import LoginScreen from './app/user_modules/screens/LoginScreen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import sampleUsers from './app/user_modules/data/sampleUsers';
+import handleLogout from './app/user_modules/services/logOut';
+import UserContext from './app/user_modules/services/UserContext';
+
+
+const initializeUsers = async () => {
+  try {
+    const existingUsers = await AsyncStorage.getItem('users');
+    if (!existingUsers) {
+      await AsyncStorage.setItem('users', JSON.stringify(sampleUsers));
+      console.log('Users initialized!');
+    } else {
+      console.log('Users already exist');
+    }
+  } catch (error) {
+    console.error('Error initializing users:', error);
+  }
+};
+
 
 const Tab = createBottomTabNavigator();
 
-const currentUser = new User('Lunis');
-console.log(currentUser.name);
 const Stack = createStackNavigator();
 
 const Drawer = createDrawerNavigator();
-
-
-// function AppDrawerStack() {
-//   return (
-//       <Drawer.Navigator drawerContent={props => <DrawerView {...props} />}>
-//           <Drawer.Screen name='AppBottomStack' component={AppBottomStack} />
-//       </Drawer.Navigator>
-//   )
-
-// }
 
 function MyTabs() {
   return (
@@ -100,8 +103,12 @@ function CarpoolStack() {
       options={{ headerShown: false }}
       />
     <Stack.Screen 
-      name="CarpoolDetails" 
-      component={CarpoolApplication} />
+      name="Aangemelde carpools" 
+      component={CarpoolApplication} 
+      options={{
+        header: (props) => <CustomHeader {...props} name = "Carpool aanmelding" showHamburger={false} />,
+      }}
+      />
     <Stack.Screen 
       name="Carpool aanmaken" 
       component={CreateCarpool}
@@ -123,30 +130,76 @@ function CarpoolStack() {
         header: (props) => <CustomHeader {...props} name = "Carpool details" showHamburger={false} />,
       }}
       />
+      <Stack.Screen
+      name="Gekozen carpool"
+      component={ToBeJoinedCarpool}
+      options={{
+        header: (props) => <CustomHeader {...props} name = "Gekozen carpool" showHamburger={false} />,
+      }}
+      />
+      <Stack.Screen
+      name="Aanvragen"
+      component={ApplyToCarpool}
+      options={{
+        header: (props) => <CustomHeader {...props} name = "Carpool aanmelding" showHamburger={false} />,
+      }}
+      />
   </Stack.Navigator>
   )
 }
 
-export default function App() {
-  // const visibility = NavigationBar.useVisibility()
+function MainScreens() {
   return (
-    <UserContext.Provider value={currentUser}>
-      <NavigationContainer>
         <Drawer.Navigator 
           drawerContent={props => <DrawerView {...props}/>}   
           screenOptions={{ headerShown: false }}>
           <Drawer.Screen name="CarpoolStack" component={CarpoolStack} />
         </Drawer.Navigator>
-      </NavigationContainer>
-    </UserContext.Provider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
+
+export default function App() {
+  const [currentUser, setCurrentUser] = useState(null);
+  const MainAppScreens = () => {
+    // checkCurrentUser();
+
+    if (!currentUser) {
+      return <LoginScreen />;
+    }
+  
+    return (
+        <UserContext.Provider value={{ currentUser }}>
+          <MainScreens />
+        </UserContext.Provider>
+    );
+  };
+
+  useEffect(() => {
+    // handleLogout();
+    initializeUsers();
+    checkCurrentUser();
+  }, []);
+  
+  const checkCurrentUser = async () => {
+    try {
+      const userString = await AsyncStorage.getItem('currentUser');
+      // console.log("1")
+
+      // console.log("1")
+      if (userString) {
+        setCurrentUser(JSON.parse(userString));
+      }
+    } catch (error) {
+      console.error('Error fetching current user:', error);
+    }
+  };
+  return (
+    // <UserContext.Provider value={{ currentUser }}>
+      <NavigationContainer>
+        <MainAppScreens/>
+      </NavigationContainer>
+    // </UserContext.Provider>
+  );  
+}

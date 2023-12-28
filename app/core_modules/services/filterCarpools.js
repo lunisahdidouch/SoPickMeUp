@@ -1,27 +1,32 @@
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { useContext } from 'react';
 import ExpandedCarpoolCard from '../components/ExpandedCarpoolCard';
-import CarpoolCard from '../components/CarpoolCard';
+import CarpoolCard from '../components/ExpandedCarpoolCard';
+import UserContext from '../../user_modules/services/UserContext';
 
 
 const FilterCreatedCarpools = ({carpools}) => {
-    return(
-        <ScrollView className="mb-6 mt-20">
-          {Object.entries(carpools).map(([date, carpoolsList]) => (
-            <View key={date}>
-              {carpoolsList.map((carpoolDetails, index) => {
-                if (carpoolDetails.userId === 3) {
-                  return (
-                    <View key={`${carpoolDetails.date}-${index}`}>
-                      <Text className="ml-9 mb-2 font-bold text-base">{date}</Text>
-                      <View style={styles.container}>
-                        <ExpandedCarpoolCard carpoolDetails={carpoolDetails} carpoolDate ={date} />
-                      </View>
-                    </View>
-                  )}
-              })}
-            </View>
-          ))}
-        </ScrollView>
+  const currentUser = useContext(UserContext);
+  const sortedCarpools = Object.entries(carpools).sort((a, b) => new Date(a[0]) - new Date(b[0]));
+
+  return(
+    <ScrollView className="mb-6 mt-20">
+      {sortedCarpools.map(([date, carpoolsList]) => (
+        <View key={date}>
+          {carpoolsList.map((carpoolDetails, index) => {
+            if (carpoolDetails.userId === currentUser.currentUser.userId) {
+              return (
+                <View key={`${carpoolDetails.date}-${index}`}>
+                  <Text className="ml-9 mb-2 font-bold text-base">{date}</Text>
+                  <View style={styles.container}>
+                    <ExpandedCarpoolCard carpoolDetails={carpoolDetails} carpoolDate ={date} screen={"Carpool details"}/>
+                  </View>
+                </View>
+              )}
+          })}
+        </View>
+      ))}
+    </ScrollView>
 )};
 
 const FilterJoinedCarpools = ({carpools}) => {
@@ -35,7 +40,7 @@ const FilterJoinedCarpools = ({carpools}) => {
                 <View key={`${date}-${index}`}>
                   <Text className="ml-9 mb-2 font-bold text-base">{date}</Text>
                   <View style={styles.container}>
-                    <CarpoolCard carpoolDetails={carpoolDetails} carpoolDate ={date} />
+                    <ExpandedCarpoolCard carpoolDetails={carpoolDetails} carpoolDate ={date} screen={"Aangemelde carpools"} />
                   </View>
                 </View>
               )} 

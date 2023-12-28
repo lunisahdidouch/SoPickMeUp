@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { View, Button } from 'react-native';
+import React, { useState, useEffect, useContext } from 'react';
+import { View, Text } from 'react-native';
 import { FilterCreatedCarpools } from '../services/filterCarpools';
 import { fetchCarpools } from '../services/fetchCarpools';
 import { useNavigation } from '@react-navigation/native';
-import CustomButton from '../components/CustomButton';
+import RefreshableScrollView from '../components/RefreshableScrollView';
+import UserContext from '../../user_modules/services/UserContext';
 
 
 
-const PlannedRides = () => {
+const CreatedCarpools = () => {
     const [carpools, setCarpools] = useState({});
     const navigation = useNavigation();
+    const currentUser = useContext(UserContext);
 
     const refreshCarpools = async () => {
         const fetchedCarpools = await fetchCarpools();
@@ -18,32 +20,21 @@ const PlannedRides = () => {
     const handleCreateCarpoolPress = () => {
         navigation.navigate('Carpool aanpassen', { carpoolDetails, carpoolDate });
     };
-    // const handlePress = () => {
-    //   navigation.navigate('CarpoolDetails', { carpoolDetails, carpoolDate });
-    // };
 
     useEffect( () => {
         refreshCarpools();
     }, []);
     return (
-        <View>
-             <View className="items-center mt-5 mb-3 ml-2 absolute">
-                <CustomButton
-                  title="Refresh"
-                  backgroundColor="transparent"
-                  borderColor='#0070AD'
-                  textColor='#0070AD'
-                  width={60}
-                  height={30}
-                  onPress={refreshCarpools}
-                />
-            </View>
+        <RefreshableScrollView onRefresh={refreshCarpools}>
+            {/* <View>
+              <Text>Current user: {currentUser.currentUser.name}</Text>
+            </View> */}
             <FilterCreatedCarpools
               carpools={carpools}
               fetchCarpools={handleCreateCarpoolPress}
             />
-        </View>
+        </RefreshableScrollView>
 
   );
 };
-export default PlannedRides;
+export default CreatedCarpools;

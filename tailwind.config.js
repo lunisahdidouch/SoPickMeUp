@@ -11,6 +11,7 @@ module.exports = {
     "./app/user_input_modules/components/**/*.{js,jsx,ts,tsx}",
     "./app/user_modules/models/**/*.{js,jsx,ts,tsx}",
     "./app/user_modules/services/**/*.{js,jsx,ts,tsx}",
+    "./app/user_modules/screens/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
     extend: {},
