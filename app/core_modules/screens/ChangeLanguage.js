@@ -1,12 +1,22 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import React from 'react';
+import { View, Button } from 'react-native';
+import i18n from '../data/Translations';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Updates from 'expo-updates';
 
-const ChangeLanguage = () => {
+const LanguageSelectionScreen = ({ navigation }) => {
+  const setLanguage = async (language) => {
+    i18n.locale = language;
+    await AsyncStorage.setItem('selectedLanguage', language);
+    Updates.reloadAsync();
+  };
+
   return (
     <View>
-      <Text>ChangeLanguage</Text>
+      <Button title="English" onPress={() => setLanguage('en')} />
+      <Button title="Nederlands" onPress={() => setLanguage('nl')} />
     </View>
-  )
-}
+  );
+};
 
-export default ChangeLanguage
+export default LanguageSelectionScreen;

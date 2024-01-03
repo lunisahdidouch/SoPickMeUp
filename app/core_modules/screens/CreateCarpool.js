@@ -4,17 +4,21 @@ import Carpool from '../models/Carpool';
 import CarpoolDetails from '../models/CarpoolDetails';
 import { saveCarpool } from '../services/storageService';
 import TextField from '../../user_input_modules/components/TextField';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import DatePicker from '../../user_input_modules/components/DatePicker';
 import TimePicker from '../../user_input_modules/components/TimePicker';
 import AvailableSeats from '../../user_input_modules/components/AvailableSeats';
 import DropDown from '../../user_input_modules/components/DropDown';
-import randomValue from '../utils/randomValue';
 import CustomButton from '../components/CustomButton';
 import UserContext from '../../user_modules/services/UserContext';
+import { useNavigation } from '@react-navigation/native';
+import i18n from '../data/Translations';
 
-
+const handleNavigation = (navigation) => {
+  navigation.navigate('Alle carpools');
+};
 const CreateCarpool = () => {
+  const navigation = useNavigation();
+
   const [formData, setFormData] = useState({
       starterLocation: '',
       endLocation: '',
@@ -29,27 +33,17 @@ const CreateCarpool = () => {
   });
 
   const rideItems = [
-    { label: 'Heen', value: 'false'},
-    { label: 'Heen en terug', value: 'true'},
+    { label: i18n.t('rideTypeOption1') , value: 'false'},
+    { label: i18n.t('rideTypeOption2'), value: 'true'},
   ];
 
   const visibilityItems = [
-    { label: 'Anoniem', value: 'false'},
-    { label: 'Zichtbaar', value: 'true'},
+    { label: i18n.t('nameVisibilityOption1'), value: 'false'},
+    { label: i18n.t('nameVisibilityOption2'), value: 'true'},
   ];
 
   let driverName = 'Anoniem';
   const currentUser = useContext(UserContext);
- 
-  const deleteCarpools = async () => {
-    try {
-        await AsyncStorage.removeItem('carpoolsByDate');
-        console.log('Carpools deleted!');
-    } catch (error) {
-        console.error('Failed to delete carpools', error);
-    }
-  };
-
 
   const handleInputChange = (name, value) => {
       // console.log("Values: " + name, value);
@@ -71,17 +65,18 @@ const CreateCarpool = () => {
   
     await saveCarpool(newCarpool, newCarpoolDetails, departureDate);
     Alert.alert("Carpool is aangemaakt")
+    handleNavigation(navigation);
   };
   return (
     <ScrollView style={styles.container}>
       {/* <View style={styles.container}> */}
         <TextField
-            placeholder="Vertrek plaats"
+            placeholder={i18n.t('startLocation')}
             value={formData.starterLocation}
             onChangeText={(text) => handleInputChange('starterLocation', text)}
         />
         <TextField
-            placeholder="Bestemming"
+            placeholder={i18n.t('endLocation')}
             value={formData.endLocation}
             onChangeText={(text) => handleInputChange('endLocation', text)}
         />
@@ -106,7 +101,7 @@ const CreateCarpool = () => {
           mainValue={formData.rideType}
           handleInputChange={handleInputChange}
         />
-        <Text style={styles.title}>Naam zichtbaarheid</Text>
+        <Text style={styles.title}>{i18n.t('nameVisibility')}</Text>
         <DropDown
           items={visibilityItems}
           defaultValue={visibilityItems[0].value}
@@ -116,7 +111,7 @@ const CreateCarpool = () => {
         />
 
         <TextField
-            placeholder="Opmerking"
+            placeholder={i18n.t('comment')}
             value={formData.comment}
             onChangeText={(text) => handleInputChange('comment', text)}
             multiline={true}

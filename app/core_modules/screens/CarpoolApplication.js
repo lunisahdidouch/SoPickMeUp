@@ -4,8 +4,7 @@ import { Image } from 'expo-image';
 import CustomButton from '../components/CustomButton';
 import randomValue from '../utils/randomValue';
 import { saveCarpool } from '../services/storageService';
-import { fetchCarpools } from '../services/fetchCarpools';
-import { saveCarpools } from '../services/saveCarpools';
+import i18n from '../data/Translations';
 
 
 const CancelApplication = async (carpoolDetails, carpoolDate) => {
@@ -25,7 +24,7 @@ const ChosenCarpool = ({ route }) => {
   const { carpoolDetails, carpoolDate } = route.params;
   return (
     <View className="mt-10 ml-3">
-      <Text className="font-extrabold text-2xl mb-3 ">Overzicht</Text>
+      <Text className="font-extrabold text-2xl mb-3 ">{i18n.t('overview')}</Text>
       <Text className="font-extrabold text-xl">{carpoolDate}</Text>
 
 
@@ -50,44 +49,42 @@ const ChosenCarpool = ({ route }) => {
         </View>
       </View>
       <View className="flex flex-column justify-center">
-        <Text className="ml-3 font-extrabold text-xl">Vrije plaatsen:</Text>
+        <Text className="ml-3 font-extrabold text-xl">{i18n.t('availableSeats')}</Text>
         <Text className="ml-5 text-xl">{carpoolDetails.details.availableSeats}</Text>
       </View>
       <View className="flex flex-column justify-center">
-        <Text className="ml-3 font-extrabold text-xl">Chauffeur:</Text>
+        <Text className="ml-3 font-extrabold text-xl">{i18n.t('driver')}</Text>
         <Text className="ml-3 mt-2">{carpoolDetails.details.driverName}</Text>
       </View>
       <View>
         {
-          carpoolDetails.passengers && Object.entries(carpoolDetails.passengers).length === 0 ? (
-            <View>
-              <Text>No passengers</Text>
-            </View>
-            ) : (
-              carpoolDetails.passengers && Object.entries(carpoolDetails.passengers).map((passenger) => (
-                <View key={passenger[0]}>
-                <Text className="ml-3 font-extrabold text-xl">Passengers:</Text>
-                <Text className="ml-3 mt-2">{passenger[1]}</Text>
-              </View>
-            ))
-            )
-            
-        }
+          // carpoolDetails.details.passengers && Object.entries(carpoolDetails.details.passengers).length === 0 ? (
+          //   <View>
+          //     <Text>No passengers</Text>
+          //   </View>
+          //   ) : (
+          //     carpoolDetails.details.passengers && Object.entries(carpoolDetails.details.passengers).map((passenger) => (
+          //       <View key={passenger[0]}>
+          //       <Text className="ml-3 font-extrabold text-xl">Passengers:</Text>
+          //       <Text className="ml-3 mt-2">{passenger[1]}</Text>
+          //     </View>
+          //   ))
+          //   )
+          <View className="flex flex-column justify-center">
+          <Text className="ml-3 font-extrabold text-xl">{i18n.t('passengers')}</Text>
+          <Text className="ml-3 mt-2">{carpoolDetails.details.passengers}</Text>
         </View>
-
-      <View className="flex flex-column justify-center">
-        <Text className="ml-3 font-extrabold text-xl">Opmerking:</Text>
-        <Text className="ml-3 mt-2">{carpoolDetails.details.passengers}</Text>
+        }
       </View>
       <View className="items-center mt-5">
-            <CustomButton
-            backgroundColor="transparent"
-            borderColor='#FF0000'
-            textColor='#FF0000'
-            title="Afmelden"
-            onPress={() => CancelApplication(carpoolDetails, carpoolDate)}
-            />
-          </View>
+        <CustomButton
+        backgroundColor="transparent"
+        borderColor='#FF0000'
+        textColor='#FF0000'
+        title={i18n.t('cancel')}
+        onPress={() => CancelApplication(carpoolDetails, carpoolDate)}
+        />
+      </View>
     </View>
   );
 };

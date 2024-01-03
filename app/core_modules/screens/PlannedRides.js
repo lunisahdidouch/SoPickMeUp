@@ -5,6 +5,7 @@ import { fetchCarpools } from '../services/fetchCarpools';
 import { useNavigation } from '@react-navigation/native';
 import CustomButton from '../components/CustomButton';
 import RefreshableScrollView from '../components/RefreshableScrollView';
+import i18n from '../data/Translations';
 
 
 
@@ -27,7 +28,7 @@ const PlannedRides = () => {
         <RefreshableScrollView onRefresh={refreshCarpools}>
             <View className="items-center mt-5 mb-3">
                 <CustomButton
-                    title="Carpool aanmaken"
+                    title={i18n.t('createCarpool')}
                     backgroundColor="transparent"
                     borderColor='#0070AD'
                     textColor='#0070AD'

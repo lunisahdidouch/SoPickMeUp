@@ -10,21 +10,10 @@ import AvailableSeats from '../../user_input_modules/components/AvailableSeats';
 import DropDown from '../../user_input_modules/components/DropDown';
 import CustomButton from '../components/CustomButton';
 import UserContext from '../../user_modules/services/UserContext';
+import i18n from '../data/Translations';
 
 
 let driverName = 'Anoniem';
-
-// const handleSubmit = async (carpoolDetails, carpoolDate, editedCarpool, editedCarpoolDetails, date, currentUser) => {
-//   // console.log("New date---: " + newDate)
-//   if(editedCarpool.nameVisibility === 'true') {
-//     driverName = currentUser.name;
-//   }
-//   // console.log("Edited carpool: " + JSON.stringify(editedCarpool) + "-------------" + JSON.stringify(editedCarpool.details.departureTime));
-//   await saveCarpool(editedCarpool, editedCarpoolDetails, date);
-//   // setTimeout(() => {  
-//   await deleteCarpool(carpoolDetails.carpoolId, carpoolDate);
-//   // }, 4000);
-// };
 
 
 const EditCarpool = ({ route }) => {
@@ -36,13 +25,13 @@ const EditCarpool = ({ route }) => {
   const currentUser = useContext(UserContext);
   
   const rideItems = [
-    { label: 'Heen', value: 'false'},
-    { label: 'Heen en terug', value: 'true'},
+    { label: i18n.t('rideTypeOption1') , value: 'false'},
+    { label: i18n.t('rideTypeOption2'), value: 'true'},
   ];
 
   const visibilityItems = [
-    { label: 'Anoniem', value: 'false'},
-    { label: 'Zichtbaar', value: 'true'},
+    { label: i18n.t('nameVisibilityOption1'), value: 'false'},
+    { label: i18n.t('nameVisibilityOption2'), value: 'true'},
   ];
   
   let newDate = carpoolDate;
@@ -78,12 +67,12 @@ const EditCarpool = ({ route }) => {
   return (
     <ScrollView style={styles.container}>
         <TextField
-            placeholder="Vertrek plaats"
+            placeholder={i18n.t('startLocation')}
             value={editedCarpool.starterLocation}
             onChangeText={(text) => handleInputChange('starterLocation', text)}
         />
         <TextField
-            placeholder="Bestemming"
+            placeholder={i18n.t('endLocation')}
             value={editedCarpool.endLocation}
             onChangeText={(text) => handleInputChange('endLocation', text)}
         />
@@ -108,7 +97,7 @@ const EditCarpool = ({ route }) => {
           mainValue={editedCarpool.details.rideType}
           handleInputChange={handleInputChangeDetails}
         />
-        <Text style={styles.title}>Naam zichtbaarheid</Text>
+        <Text style={styles.title}>{i18n.t('nameVisibility')}</Text>
         <DropDown
           items={visibilityItems}
           defaultValue={visibilityItems[0].value}

@@ -28,7 +28,7 @@ const LoginScreen = () => {
 
 
       if (user) {
-        console.log('user: -----', JSON.stringify(user));
+        console.log('user: -  ----', JSON.stringify(user));
         await AsyncStorage.setItem('currentUser', JSON.stringify(user));
         refresh();
         // handlePress();

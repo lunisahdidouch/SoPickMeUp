@@ -1,10 +1,16 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Alert } from 'react-native';
 import { Image } from 'expo-image';
 import CustomButton from '../components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
+import i18n from '../data/Translations';
+import { deleteCarpool } from '../services/deleteCarpool';
 
-
+const deletion = async (carpoolId, carpoolDate, navigation) => {
+  await deleteCarpool(carpoolId, carpoolDate);
+  Alert.alert("Carpool is verwijderd")
+  navigation.goBack();
+}
 
 const CreatedCarpoolDetails = ({ route }) => {
   const { carpoolDetails, carpoolDate } = route.params;
@@ -14,9 +20,10 @@ const CreatedCarpoolDetails = ({ route }) => {
   const handleCreateCarpoolPress = () => {
     navigation.navigate('Carpool aanpassen', {carpoolDetails, carpoolDate});
   };
+
   return (
     <View className="mt-10 ml-3">
-      <Text className="font-extrabold text-2xl mb-3 ">Overzicht</Text>
+      <Text className="font-extrabold text-2xl mb-3 ">{i18n.t('overview')}</Text>
       <Text className="font-extrabold text-xl">{carpoolDate}</Text>
 
 
@@ -41,26 +48,39 @@ const CreatedCarpoolDetails = ({ route }) => {
         </View>
       </View>
       <View className="flex flex-column justify-center">
-        <Text className="ml-3 font-extrabold text-xl">Vrije plaatsen:</Text>
+        <Text className="ml-3 font-extrabold text-xl">{i18n.t('availableSeats')}:</Text>
         <Text className="ml-5 text-xl">{carpoolDetails.details.availableSeats}</Text>
       </View>
       <View className="flex flex-column justify-center">
-        <Text className="ml-3 font-extrabold text-xl">Chauffeur:</Text>
+        <Text className="ml-3 font-extrabold text-xl">{i18n.t('driver')}:</Text>
         <Text className="ml-3 mt-2">{carpoolDetails.details.driverName}</Text>
       </View>
       <View className="flex flex-column justify-center">
-        <Text className="ml-3 font-extrabold text-xl">Opmerking:</Text>
+        <Text className="ml-3 font-extrabold text-xl">{i18n.t('passengers')}:</Text>
         <Text className="ml-3 mt-2">{carpoolDetails.details.passengers}</Text>
+      </View>
+      <View className="flex flex-column justify-center">
+        <Text className="ml-3 font-extrabold text-xl">{i18n.t('comment')}:</Text>
+        <Text className="ml-3 mt-2">{carpoolDetails.details.comments}</Text>
       </View>
       <View className="items-center mt-5">
             <CustomButton
             backgroundColor="transparent"
             borderColor='#0070AD'
             textColor='#0070AD'
-            title="Aanpassen"
+            title={i18n.t('edit')}
             onPress={handleCreateCarpoolPress}
             />
-          </View>
+      </View>
+      <View className="items-center mt-5">
+            <CustomButton
+            backgroundColor="transparent"
+            borderColor='#FF0000'
+            textColor='#FF0000'
+            title={i18n.t('delete')}
+            onPress={() => deletion(carpoolDetails.carpoolId, carpoolDate, navigation)}
+            />
+      </View>
     </View>
   );
 };

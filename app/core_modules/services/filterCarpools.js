@@ -30,9 +30,11 @@ const FilterCreatedCarpools = ({carpools}) => {
 )};
 
 const FilterJoinedCarpools = ({carpools}) => {
+  const sortedCarpools = Object.entries(carpools).sort((a, b) => new Date(a[0]) - new Date(b[0]));
+
   return(
     <ScrollView className="mb-6 mt-20">
-      {Object.entries(carpools).map(([date, carpoolsList]) => (
+      {sortedCarpools.map(([date, carpoolsList]) => (
         <View key={date}>
           {carpoolsList.map((carpoolDetails, index) => {
             if (carpoolDetails.details.passengers && carpoolDetails.details.passengers.includes(7)) {

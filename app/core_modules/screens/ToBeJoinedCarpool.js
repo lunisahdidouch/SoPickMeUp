@@ -2,9 +2,8 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Image } from 'expo-image';
 import CustomButton from '../components/CustomButton';
-import randomValue from '../utils/randomValue';
-import { saveCarpool } from '../services/storageService';
 import { useNavigation } from '@react-navigation/native';
+import i18n from '../data/Translations';
 
 const handlePress = (navigation, carpoolDetails, carpoolDate) => {
   navigation.navigate('Aanvragen', { carpoolDetails, carpoolDate });
@@ -16,7 +15,7 @@ const ToBeJoinedCarpool = ({ route }) => {
   
   return (
     <View className="mt-10 ml-3">
-      <Text className="font-extrabold text-2xl mb-3 ">Overzicht</Text>
+      <Text className="font-extrabold text-2xl mb-3 ">{i18n.t('overview')}</Text>
       <Text className="font-extrabold text-xl">{carpoolDate}</Text>
 
 
@@ -41,41 +40,45 @@ const ToBeJoinedCarpool = ({ route }) => {
         </View>
       </View>
       <View className="flex flex-column justify-center">
-        <Text className="ml-3 font-extrabold text-xl">Vrije plaatsen:</Text>
+        <Text className="ml-3 font-extrabold text-xl">{i18n.t('availableSeats')}:</Text>
         <Text className="ml-5 text-xl">{carpoolDetails.details.availableSeats}</Text>
       </View>
       <View className="flex flex-column justify-center">
-        <Text className="ml-3 font-extrabold text-xl">Chauffeur:</Text>
+        <Text className="ml-3 font-extrabold text-xl">{i18n.t('driver')}:</Text>
         <Text className="ml-3 mt-2">{carpoolDetails.details.driverName}</Text>
       </View>
       <View>
         {
-          carpoolDetails.passengers && Object.entries(carpoolDetails.passengers).length === 0 ? (
-            <View>
-              <Text>No passengers</Text>
-            </View>
-            ) : (
-              carpoolDetails.passengers && Object.entries(carpoolDetails.passengers).map((passenger) => (
-                <View key={passenger[0]}>
-                <Text className="ml-3 font-extrabold text-xl">Passengers:</Text>
-                <Text className="ml-3 mt-2">{passenger[1]}</Text>
-              </View>
-            ))
-            )
-            
+          // carpoolDetails.passengers && Object.entries(carpoolDetails.passengers).length === 0 ? (
+          //   <View>
+          //     <Text>No passengers</Text>
+          //   </View>
+          //   ) : (
+          //     carpoolDetails.details.passengers && Object.entries(carpoolDetails.details.passengers).map((passenger) => (
+          //       <View key={passenger[0]}>
+          //       {/* <Text className="ml-3 font-extrabold text-xl">{i18n.t('passengers')}:</Text> */}
+          //       <Text className="ml-3 mt-2">{passenger[1]}</Text>
+          //     </View>
+          //   ))
+          //   )
+        <View className="flex flex-column justify-center">
+          <Text className="ml-3 font-extrabold text-xl">{i18n.t('passengers')}:</Text>
+          <Text className="ml-3 mt-2">{carpoolDetails.details.passengers}</Text>
+        </View>
         }
+
         </View>
 
       <View className="flex flex-column justify-center">
-        <Text className="ml-3 font-extrabold text-xl">Opmerking:</Text>
-        <Text className="ml-3 mt-2">{carpoolDetails.details.passengers}</Text>
+        <Text className="ml-3 font-extrabold text-xl">{i18n.t('comment')}:</Text>
+        <Text className="ml-3 mt-2">{carpoolDetails.details.comment}</Text>
       </View>
       <View className="items-center mt-5">
             <CustomButton
             backgroundColor="transparent"
             borderColor='#0070AD'
             textColor='#0070AD'
-            title="Aanmelden"
+            title={i18n.t('apply')}
             onPress={() => handlePress(navigation, carpoolDetails, carpoolDate)}
             />
           </View>

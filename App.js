@@ -4,6 +4,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import CreateCarpool from './app/core_modules/screens/CreateCarpool';
 import CreatedCarpools from './app/core_modules/screens/CreatedCarpools';
 import PlannedRides from './app/core_modules/screens/PlannedRides';
+import SendFeedback from './app/core_modules/screens/SendFeedback';
+import ChangeLanguage from './app/core_modules/screens/ChangeLanguage';
 import JoinedRides from './app/core_modules/screens/JoinedRides';
 import BusFrontIcon from './app/assets/BusFront';
 import SteeringWheelIcon from './app/assets/SteeringWheel';
@@ -22,6 +24,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import sampleUsers from './app/user_modules/data/sampleUsers';
 import handleLogout from './app/user_modules/services/logOut';
 import UserContext from './app/user_modules/services/UserContext';
+import i18n from './app/core_modules/data/Translations';
 
 
 const initializeUsers = async () => {
@@ -38,16 +41,26 @@ const initializeUsers = async () => {
   }
 };
 
+const getStoredLanguage = async () => {
+  const language = await AsyncStorage.getItem('selectedLanguage');
+  if (language) {
+    i18n.locale = language;
+  }
+};
+
+let currentLanguage = ""
 
 const Tab = createBottomTabNavigator();
 
 const Stack = createStackNavigator();
 
 const Drawer = createDrawerNavigator();
-
+i18n.locale = "nl";
+getStoredLanguage();
 function MyTabs() {
   return (
     <Tab.Navigator
+    initialRouteName='Alle carpools'
     screenOptions={{
       tabBarActiveTintColor: '#12B3DB',
       tabBarInactiveTintColor: '#000000',
@@ -69,7 +82,7 @@ function MyTabs() {
         tabBarIcon: ({ focused, color, size }) => (
           <SteeringWheelIcon width={40} height={40} color = {focused ? "#12B3DB" : "#0070AD"} />
           ),
-        header: () => <CustomHeader name = "Mijn carpools" showHamburger={true}/>,
+        header: () => <CustomHeader name = {i18n.t('tab1')} showHamburger={true}/>,
       }} 
       />
       <Tab.Screen 
@@ -79,7 +92,7 @@ function MyTabs() {
         tabBarIcon: ({ focused, color, size }) => (
           <BusFrontIcon width={40} height={40} color={focused ? "#12B3DB" : "#0070AD"} />
         ),
-        header: () => <CustomHeader name = "Alle carpools" showHamburger={true}/>,
+        header: () => <CustomHeader name = {i18n.t('tab2')} showHamburger={true}/>,
       }}
       />
       <Tab.Screen 
@@ -89,7 +102,7 @@ function MyTabs() {
         tabBarIcon: ({ focused, color, size }) => (
           <BusSideIcon width={50} height={50} color={focused ? "#12B3DB" : "#0070AD"} />
         ),
-        header: () => <CustomHeader name = "Meerijden" showHamburger={true}/>,
+        header: () => <CustomHeader name = {i18n.t('tab3')} showHamburger={true}/>,
       }}
       />
     </Tab.Navigator>
@@ -106,42 +119,56 @@ function CarpoolStack() {
       name="Aangemelde carpools" 
       component={CarpoolApplication} 
       options={{
-        header: (props) => <CustomHeader {...props} name = "Carpool aanmelding" showHamburger={false} />,
+        header: (props) => <CustomHeader {...props} name = {i18n.t('carpoolApplication')} showHamburger={false} />,
       }}
       />
     <Stack.Screen 
       name="Carpool aanmaken" 
       component={CreateCarpool}
       options={{
-        header: (props) => <CustomHeader {...props} name = "Carpool aanmaken" showHamburger={false} />,
+        header: (props) => <CustomHeader {...props} name = {i18n.t('createCarpool')} showHamburger={false} />,
       }}          
       />
       <Stack.Screen
       name="Carpool aanpassen"
       component={EditCarpool}
       options={{
-        header: (props) => <CustomHeader {...props} name = "Carpool aanpassen" showHamburger={false} />,
+        header: (props) => <CustomHeader {...props} name = {i18n.t('editCarpool')} showHamburger={false} />,
       }}
       />
       <Stack.Screen
       name="Carpool details"
       component={CreatedCarpoolDetails}
       options={{
-        header: (props) => <CustomHeader {...props} name = "Carpool details" showHamburger={false} />,
+        header: (props) => <CustomHeader {...props} name = {i18n.t('carpoolDetails')} showHamburger={false} />,
       }}
       />
       <Stack.Screen
       name="Gekozen carpool"
       component={ToBeJoinedCarpool}
       options={{
-        header: (props) => <CustomHeader {...props} name = "Gekozen carpool" showHamburger={false} />,
+        header: (props) => <CustomHeader {...props} name = {i18n.t('chosenCarpool')} showHamburger={false} />,
       }}
       />
       <Stack.Screen
       name="Aanvragen"
       component={ApplyToCarpool}
       options={{
-        header: (props) => <CustomHeader {...props} name = "Carpool aanmelding" showHamburger={false} />,
+        header: (props) => <CustomHeader {...props} name = {i18n.t('carpoolApplication')} showHamburger={false} />,
+      }}
+      />
+      <Stack.Screen
+      name="Taal veranderen"
+      component={ChangeLanguage}
+      options={{
+        header: (props) => <CustomHeader {...props} name = {i18n.t('changeLanguage')} showHamburger={false} />,
+      }}
+      />
+      <Stack.Screen
+      name="Feedback insturen"
+      component={SendFeedback}
+      options={{
+        header: (props) => <CustomHeader {...props} name = {i18n.t('sendFeedback')} showHamburger={false} />,
       }}
       />
   </Stack.Navigator>
@@ -163,8 +190,6 @@ function MainScreens() {
 export default function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const MainAppScreens = () => {
-    // checkCurrentUser();
-
     if (!currentUser) {
       return <LoginScreen />;
     }
@@ -177,17 +202,15 @@ export default function App() {
   };
 
   useEffect(() => {
-    // handleLogout();
     initializeUsers();
     checkCurrentUser();
+    getStoredLanguage();
   }, []);
   
   const checkCurrentUser = async () => {
     try {
       const userString = await AsyncStorage.getItem('currentUser');
-      // console.log("1")
 
-      // console.log("1")
       if (userString) {
         setCurrentUser(JSON.parse(userString));
       }
@@ -196,10 +219,8 @@ export default function App() {
     }
   };
   return (
-    // <UserContext.Provider value={{ currentUser }}>
       <NavigationContainer>
         <MainAppScreens/>
       </NavigationContainer>
-    // </UserContext.Provider>
   );  
 }

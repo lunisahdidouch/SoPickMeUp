@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import MinusIcon from '../../assets/MinusIcon';
 import PlusIcon from '../../assets/PlusIcon';
+import i18n from '../../core_modules/data/Translations';
 
 const SeatPicker = (props, value, onChangeText) => {
   const [seats, setSeats] = useState(1);
@@ -21,7 +22,7 @@ const SeatPicker = (props, value, onChangeText) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Aantal plekken</Text>
+      <Text style={styles.title}>{i18n.t('availableSeats')}</Text>
       <View style={styles.pickerContainer}>
         <TouchableOpacity onPress={decreaseSeats}>
           <MinusIcon width={32} height={32} color="#0070AD" strokeColor="transparent" />
