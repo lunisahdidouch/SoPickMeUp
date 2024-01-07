@@ -5,9 +5,10 @@ import CustomButton from '../components/CustomButton';
 import randomValue from '../utils/randomValue';
 import { saveCarpool } from '../services/storageService';
 import i18n from '../data/Translations';
+import { useNavigation } from '@react-navigation/native';
 
 
-const CancelApplication = async (carpoolDetails, carpoolDate) => {
+const CancelApplication = async (navigation, carpoolDetails, carpoolDate) => {
   if (!carpoolDetails.details.passengers) {
     carpoolDetails.details.passengers = [];
   }
@@ -15,12 +16,14 @@ const CancelApplication = async (carpoolDetails, carpoolDate) => {
   console.log("Random Id check: " +  randomId);
   carpoolDetails.details.passengers.push(randomId);
   saveCarpool(carpoolDetails, carpoolDetails.details, carpoolDate);
-  Alert.alert("Van carpool afgemeld")
-
+  Alert.alert(i18n.t('applicationCanceled'))
+  navigation.goBack();
 }
 
 
 const ChosenCarpool = ({ route }) => {
+  const navigation = useNavigation();
+
   const { carpoolDetails, carpoolDate } = route.params;
   return (
     <View className="mt-10 ml-3">
@@ -82,7 +85,7 @@ const ChosenCarpool = ({ route }) => {
         borderColor='#FF0000'
         textColor='#FF0000'
         title={i18n.t('cancel')}
-        onPress={() => CancelApplication(carpoolDetails, carpoolDate)}
+        onPress={() => CancelApplication(navigation, carpoolDetails, carpoolDate)}
         />
       </View>
     </View>
@@ -121,7 +124,7 @@ const styles = StyleSheet.create({
   },
   chevronRight: {
     marginTop: 20,
-  }
+  } 
 });
 
 export default ChosenCarpool;

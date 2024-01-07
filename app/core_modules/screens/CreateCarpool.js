@@ -14,8 +14,9 @@ import { useNavigation } from '@react-navigation/native';
 import i18n from '../data/Translations';
 
 const handleNavigation = (navigation) => {
-  navigation.navigate('Alle carpools');
+  navigation.navigate(i18n.t('tab2'));
 };
+
 const CreateCarpool = () => {
   const navigation = useNavigation();
 
@@ -46,7 +47,6 @@ const CreateCarpool = () => {
   const currentUser = useContext(UserContext);
 
   const handleInputChange = (name, value) => {
-      // console.log("Values: " + name, value);
       setFormData({ ...formData, [name]: value });
   };
 
@@ -64,7 +64,7 @@ const CreateCarpool = () => {
     const newCarpoolDetails = new CarpoolDetails(newCarpool.carpoolId, departureTime, availableSeats, rideType, nameVisibility, driverName, comment);
   
     await saveCarpool(newCarpool, newCarpoolDetails, departureDate);
-    Alert.alert("Carpool is aangemaakt")
+    Alert.alert(i18n.t('carpoolCreated'))
     handleNavigation(navigation);
   };
   return (
@@ -123,18 +123,9 @@ const CreateCarpool = () => {
           borderColor='#0070AD'
           textColor='#0070AD'
           onPress={handleSubmit}
-          title="Maak carpool aan"
+          title={i18n.t('createCarpool')}
           />
         </View>
-        {/* <View className="items-center mt-5">
-          <CustomButton
-          backgroundColor="red"
-          borderColor='red'
-          textColor='white'
-          onPress={deleteCarpools}
-          title="Verwijder carpools"
-          />
-        </View> */}
       {/* </View> */}
     </ScrollView>
 

@@ -8,7 +8,7 @@ import { deleteCarpool } from '../services/deleteCarpool';
 
 const deletion = async (carpoolId, carpoolDate, navigation) => {
   await deleteCarpool(carpoolId, carpoolDate);
-  Alert.alert("Carpool is verwijderd")
+  Alert.alert(i18n.t('carpoolDeleted'))
   navigation.goBack();
 }
 
@@ -17,8 +17,8 @@ const CreatedCarpoolDetails = ({ route }) => {
 
   const navigation = useNavigation();
   
-  const handleCreateCarpoolPress = () => {
-    navigation.navigate('Carpool aanpassen', {carpoolDetails, carpoolDate});
+  const handleCreateCarpoolPress = (screen) => {
+    navigation.navigate(screen, {carpoolDetails, carpoolDate});
   };
 
   return (
@@ -69,7 +69,7 @@ const CreatedCarpoolDetails = ({ route }) => {
             borderColor='#0070AD'
             textColor='#0070AD'
             title={i18n.t('edit')}
-            onPress={handleCreateCarpoolPress}
+            onPress={() => handleCreateCarpoolPress('Carpool aanpassen')}
             />
       </View>
       <View className="items-center mt-5">

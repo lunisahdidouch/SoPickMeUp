@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { View } from 'react-native';
+import React, { useState, useCallback } from 'react';
 import { FilterJoinedCarpools } from '../services/filterCarpools';
 import { fetchCarpools } from '../services/fetchCarpools';
-import CustomButton from '../components/CustomButton';
+import { useFocusEffect } from '@react-navigation/native';
 import RefreshableScrollView from '../components/RefreshableScrollView';
 
 
@@ -15,9 +14,12 @@ const PlannedRides = () => {
         setCarpools(fetchedCarpools);
     }
 
-    useEffect( () => {
-        refreshCarpools();
-    }, []);
+
+    useFocusEffect(
+      useCallback(() => {
+          refreshCarpools();
+      }, [])
+    );
     return (
         <RefreshableScrollView onRefresh={refreshCarpools}>
             <FilterJoinedCarpools

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Alert } from 'react-native';
+import { View, StyleSheet, Alert } from 'react-native';
 import UserContext from '../../user_modules/services/UserContext';
 import { useContext } from 'react';
 import CarpoolRequest from '../models/CarpoolRequest';
@@ -7,6 +7,7 @@ import CustomButton from '../components/CustomButton';
 import randomValue from '../utils/randomValue';
 import { saveCarpool } from '../services/storageService';
 import TextField from '../../user_input_modules/components/TextField';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 // const ApplyToCurrentCarpool = async (carpoolDetails, carpoolDate) => {
@@ -33,31 +34,34 @@ const ApplyToCarpool = ({ route }) => {
 
   
 
-  const handleSubmit = () => {
+  const handleSubmit = async() => {
     const userId = randomValue(1, 5);
     console.log("User ID: " + userId);
     const newCarpoolRequest = new CarpoolRequest(carpoolDetails.userId, currentUser.currentUser.userId, pickupLocation, carpoolDetails.details.carpoolId);
-    console.log("New carpool request: " + JSON.stringify(newCarpoolRequest));  
-    // saveCarpool(newCarpool, newCarpoolDetails, departureDate);
+    console.log("New carpool request: " + JSON.stringify(newCarpoolRequest)); 
+    let savedCarpoolRequests = JSON.parse(await AsyncStorage.getItem('carpoolRequests')) || [];
+    savedCarpoolRequests.push({ ...newCarpoolRequest});
+    console.log("To be saved carpool request: " + JSON.stringify(savedCarpoolRequests)); 
+    await AsyncStorage.setItem('carpoolRequests', JSON.stringify(savedCarpoolRequests));
     Alert.alert("Aanvraag ingestuurd!")
-
   };
+
   return (
     <View className="mt-10 ml-3">
-        <TextField
-          placeholder="Ophaal locatie"
-          value={pickupLocation}
-          onChangeText={(text) => handleInputChange(text)}
-        />
+      <TextField
+        placeholder="Ophaal locatie"
+        value={pickupLocation}
+        onChangeText={(text) => handleInputChange(text)}
+      />
       <View className="items-center mt-5">
-            <CustomButton
-            backgroundColor="transparent"
-            borderColor='#0070AD'
-            textColor='#0070AD'
-            title="Aanvragen"
-            onPress={() => handleSubmit(carpoolDetails, carpoolDate)}
-            />
-          </View>
+        <CustomButton
+        backgroundColor="transparent"
+        borderColor='#0070AD'
+        textColor='#0070AD'
+        title="Aanvragen"
+        onPress={() => handleSubmit(carpoolDetails, carpoolDate)}
+        />
+      </View>
     </View>
   );
 };

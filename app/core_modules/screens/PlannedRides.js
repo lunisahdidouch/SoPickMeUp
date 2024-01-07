@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { View, RefreshControl, ScrollView } from 'react-native';
+import React, { useState, useCallback,  } from 'react';
+import { View } from 'react-native';
 import ViewCarpools from '../components/AllCarpools';
 import { fetchCarpools } from '../services/fetchCarpools';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import CustomButton from '../components/CustomButton';
 import RefreshableScrollView from '../components/RefreshableScrollView';
 import i18n from '../data/Translations';
@@ -21,9 +21,11 @@ const PlannedRides = () => {
         navigation.navigate('Carpool aanmaken');
     };
 
-    useEffect( () => {
-        refreshCarpools();
-    }, []);
+    useFocusEffect(
+      useCallback(() => {
+          refreshCarpools();
+      }, [])
+    );
     return (
         <RefreshableScrollView onRefresh={refreshCarpools}>
             <View className="items-center mt-5 mb-3">

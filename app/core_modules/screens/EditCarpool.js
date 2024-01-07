@@ -1,4 +1,3 @@
-// app/core_modules/screens/EditCarpool.js
 import { View, Text, ScrollView, StyleSheet, Alert } from 'react-native';
 import React, { useState, useContext } from 'react';
 import { saveCarpool } from '../services/storageService';
@@ -11,12 +10,17 @@ import DropDown from '../../user_input_modules/components/DropDown';
 import CustomButton from '../components/CustomButton';
 import UserContext from '../../user_modules/services/UserContext';
 import i18n from '../data/Translations';
+import { useNavigation } from '@react-navigation/native';
 
 
 let driverName = 'Anoniem';
-
+const handleNavigation = (navigation) => {
+  navigation.navigate(i18n.t('tab1'));
+};
 
 const EditCarpool = ({ route }) => {
+  const navigation = useNavigation();
+
   const { carpoolDetails, carpoolDate } = route.params;
 
   const [editedCarpool, setEditedCarpool] = useState(carpoolDetails);
@@ -34,32 +38,24 @@ const EditCarpool = ({ route }) => {
     { label: i18n.t('nameVisibilityOption2'), value: 'true'},
   ];
   
-  let newDate = carpoolDate;
-  
-  // console.log("Carpool details: " + JSON.stringify(carpoolDetails.departureTime));
-  // console.log("Carpool details 123: " + JSON.stringify(carpoolDetails.details.departureTime));
-  
+  let newDate = carpoolDate;  
   
   const handleInputChangeDetails = (name, value) => {
-    // console.log("Values: " + name, value);
     setEditedCarpoolDetails({ ...editedCarpoolDetails, [name]: value });
   };
   
   const handleInputChange = (name, value) => {
-    // console.log("Values: " + name, value);
     setEditedCarpool({ ...editedCarpool, [name]: value });
   };
 
   const handleSubmit = async () => {
-    // console.log("New date---: " + newDate)
     if(editedCarpool.nameVisibility === 'true') {
       driverName = currentUser.name;
     }
-    // console.log("Edited carpool: " + JSON.stringify(editedCarpool) + "-------------" + JSON.stringify(editedCarpool.details.departureTime));
     await saveCarpool(editedCarpool, editedCarpoolDetails, date);
     await deleteCarpool(carpoolDetails.carpoolId, carpoolDate);
-    Alert.alert("Carpool is aangepast")
-
+    Alert.alert(i18n.t('carpoolEdited'))
+    handleNavigation(navigation);
   };
 
 
@@ -106,7 +102,7 @@ const EditCarpool = ({ route }) => {
           handleInputChange={handleInputChangeDetails}
         />
         <TextField
-            placeholder="Opmerking"
+            placeholder={i18n.t('comment')}
             value={editedCarpool.details.comment}
             onChangeText={(text) => handleInputChangeDetails('comment', text)}
             multiline={true}
@@ -119,7 +115,7 @@ const EditCarpool = ({ route }) => {
           textColor='#0070AD'
           onPress={handleSubmit}
           // onPress={handleSubmit(carpoolDetails, carpoolDate, editedCarpool, editedCarpoolDetails, date, currentUser)}
-          title="Wijzig carpool"
+          title={i18n.t('editCarpool')}
           />
         </View>
     </ScrollView>

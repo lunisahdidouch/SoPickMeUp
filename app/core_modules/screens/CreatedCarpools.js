@@ -1,39 +1,36 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { View, Text } from 'react-native';
+import React, { useState, useCallback } from 'react';
 import { FilterCreatedCarpools } from '../services/filterCarpools';
 import { fetchCarpools } from '../services/fetchCarpools';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import RefreshableScrollView from '../components/RefreshableScrollView';
-import UserContext from '../../user_modules/services/UserContext';
 
 
 
 const CreatedCarpools = () => {
-    const [carpools, setCarpools] = useState({});
-    const navigation = useNavigation();
-    const currentUser = useContext(UserContext);
+  const [carpools, setCarpools] = useState({});
+  const navigation = useNavigation();
 
-    const refreshCarpools = async () => {
-        const fetchedCarpools = await fetchCarpools();
-        setCarpools(fetchedCarpools);
-    }
-    const handleCreateCarpoolPress = () => {
-        navigation.navigate('Carpool aanpassen', { carpoolDetails, carpoolDate });
-    };
+  const refreshCarpools = async () => {
+      const fetchedCarpools = await fetchCarpools();
+      setCarpools(fetchedCarpools);
+  }
+  const handleCreateCarpoolPress = () => {
+      navigation.navigate('Carpool aanpassen', { carpoolDetails, carpoolDate });
+  };
 
-    useEffect( () => {
+  useFocusEffect(
+    useCallback(() => {
         refreshCarpools();
-    }, []);
-    return (
-        <RefreshableScrollView onRefresh={refreshCarpools}>
-            {/* <View>
-              <Text>Current user: {currentUser.currentUser.name}</Text>
-            </View> */}
-            <FilterCreatedCarpools
-              carpools={carpools}
-              fetchCarpools={handleCreateCarpoolPress}
-            />
-        </RefreshableScrollView>
+    }, [])
+  );
+
+  return (
+      <RefreshableScrollView onRefresh={refreshCarpools}>
+          <FilterCreatedCarpools
+            carpools={carpools}
+            fetchCarpools={handleCreateCarpoolPress}
+          />
+      </RefreshableScrollView>
 
   );
 };

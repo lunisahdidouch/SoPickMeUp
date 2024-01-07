@@ -22,7 +22,6 @@ import ApplyToCarpool from './app/core_modules/screens/ApplyToCarpool';
 import LoginScreen from './app/user_modules/screens/LoginScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import sampleUsers from './app/user_modules/data/sampleUsers';
-import handleLogout from './app/user_modules/services/logOut';
 import UserContext from './app/user_modules/services/UserContext';
 import i18n from './app/core_modules/data/Translations';
 
@@ -48,7 +47,6 @@ const getStoredLanguage = async () => {
   }
 };
 
-let currentLanguage = ""
 
 const Tab = createBottomTabNavigator();
 
@@ -60,7 +58,7 @@ getStoredLanguage();
 function MyTabs() {
   return (
     <Tab.Navigator
-    initialRouteName='Alle carpools'
+    initialRouteName={i18n.t('tab2')}
     screenOptions={{
       tabBarActiveTintColor: '#12B3DB',
       tabBarInactiveTintColor: '#000000',
@@ -76,7 +74,7 @@ function MyTabs() {
     }}
     >
       <Tab.Screen 
-      name="Mijn carpools" 
+      name={i18n.t('tab1')} 
       component={CreatedCarpools}
       options={{
         tabBarIcon: ({ focused, color, size }) => (
@@ -86,7 +84,7 @@ function MyTabs() {
       }} 
       />
       <Tab.Screen 
-      name="Alle carpools"
+      name={i18n.t('tab2')}
       component={PlannedRides} 
       options={{
         tabBarIcon: ({ focused, color, size }) => (
@@ -96,7 +94,7 @@ function MyTabs() {
       }}
       />
       <Tab.Screen 
-      name="Meerijden" 
+      name={i18n.t('tab3')} 
       component= {JoinedRides}
       options={{
         tabBarIcon: ({ focused, color, size }) => (
