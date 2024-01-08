@@ -55,13 +55,13 @@ const CreatedCarpoolDetails = ({ route }) => {
         <Text className="ml-3 font-extrabold text-xl">{i18n.t('driver')}:</Text>
         <Text className="ml-3 mt-2">{carpoolDetails.details.driverName}</Text>
       </View>
-      <View className="flex flex-column justify-center">
+      {/* <View className="flex flex-column justify-center">
         <Text className="ml-3 font-extrabold text-xl">{i18n.t('passengers')}:</Text>
         <Text className="ml-3 mt-2">{carpoolDetails.details.passengers}</Text>
-      </View>
+      </View> */}
       <View className="flex flex-column justify-center">
         <Text className="ml-3 font-extrabold text-xl">{i18n.t('comment')}:</Text>
-        <Text className="ml-3 mt-2">{carpoolDetails.details.comments}</Text>
+        <Text className="ml-3 mt-2">{carpoolDetails.details.comment}</Text>
       </View>
       <View className="items-center mt-5">
             <CustomButton

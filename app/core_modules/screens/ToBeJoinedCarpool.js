@@ -25,7 +25,6 @@ const ToBeJoinedCarpool = ({ route }) => {
           <Image
             style={styles.routeIcon}
             source={require('../../assets/RouteIcon.png')}
-            // placeholder={blurhash}
             contentFit="cover"
             transition={1000}
             />

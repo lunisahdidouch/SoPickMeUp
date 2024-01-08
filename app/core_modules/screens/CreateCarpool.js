@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View, ScrollView, StyleSheet, Text, Alert } from 'react-native';
+import { View, ScrollView, StyleSheet, Text, Alert, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import Carpool from '../models/Carpool';
 import CarpoolDetails from '../models/CarpoolDetails';
 import { saveCarpool } from '../services/storageService';
@@ -14,7 +14,7 @@ import { useNavigation } from '@react-navigation/native';
 import i18n from '../data/Translations';
 
 const handleNavigation = (navigation) => {
-  navigation.navigate(i18n.t('tab2'));
+  navigation.navigate(i18n.t('tab2'), {shouldRefresh: true});
 };
 
 const CreateCarpool = () => {
@@ -24,7 +24,7 @@ const CreateCarpool = () => {
       starterLocation: '',
       endLocation: '',
       tripDuration: '',
-      departureDate: new Date().toLocaleDateString(),
+      departureDate: new Date().toISOString().split('T')[0],
       departureTime: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       arrivalTime: '',
       rideType: 'false',
@@ -55,21 +55,22 @@ const CreateCarpool = () => {
   const handleSubmit = async () => {
     const { starterLocation, endLocation, departureDate, departureTime, availableSeats, rideType, nameVisibility, comment } = formData;
     const userId = currentUser.currentUser.userId;
-    console.log("User ID: " + userId);
 
     if(nameVisibility === 'true') {
       driverName = currentUser.name;
     }
     const newCarpool = new Carpool(userId, starterLocation, endLocation);
     const newCarpoolDetails = new CarpoolDetails(newCarpool.carpoolId, departureTime, availableSeats, rideType, nameVisibility, driverName, comment);
-  
     await saveCarpool(newCarpool, newCarpoolDetails, departureDate);
     Alert.alert(i18n.t('carpoolCreated'))
     handleNavigation(navigation);
   };
   return (
-    <ScrollView style={styles.container}>
-      {/* <View style={styles.container}> */}
+    // <ScrollView style={styles.container}>
+    // <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
+    //   <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+       <View style={styles.container}>
+        <Text className="ml-4 mb-5 mt-5 font-extrabold text-xl">{i18n.t('createCarpoolHeader')}</Text>
         <TextField
             placeholder={i18n.t('startLocation')}
             value={formData.starterLocation}
@@ -83,7 +84,7 @@ const CreateCarpool = () => {
         <View style={styles.pickers}>
           <DatePicker
             value={new Date(formData.departureDate)}
-            onDateChange={(selectedDate) => handleInputChange('departureDate', selectedDate.toLocaleDateString())}
+            onDateChange={(selectedDate) => handleInputChange('departureDate', selectedDate.toISOString().split('T')[0])}
           />
           <TimePicker
             value={new Date(`${formData.departureTime}`)}
@@ -126,8 +127,11 @@ const CreateCarpool = () => {
           title={i18n.t('createCarpool')}
           />
         </View>
-      {/* </View> */}
-    </ScrollView>
+      </View>
+     // </TouchableWithoutFeedback>
+    //  </KeyboardAvoidingView> 
+
+    // </ScrollView>
 
   );
 };

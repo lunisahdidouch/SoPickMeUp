@@ -17,7 +17,7 @@ const CancelApplication = async (navigation, carpoolDetails, carpoolDate) => {
   carpoolDetails.details.passengers.push(randomId);
   saveCarpool(carpoolDetails, carpoolDetails.details, carpoolDate);
   Alert.alert(i18n.t('applicationCanceled'))
-  navigation.goBack();
+  navigation.navigate(i18n.t('tab3'), {shouldRefresh: true});
 }
 
 

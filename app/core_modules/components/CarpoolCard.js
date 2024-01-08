@@ -5,7 +5,7 @@ import ChevronRight from '../../assets/ChevronRight';
 import { Image } from 'expo-image';
 import { TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-// import CarpoolApplication
+import i18n from '../data/Translations';
 
 const generateBoxShadowStyle = (
   xOffset,
@@ -64,7 +64,7 @@ const CarpoolCard = ({ carpoolDate, carpoolDetails }) => {
               <Text numberOfLines={1} ellipsizeMode='tail' className="mt-6" style={styles.destination}>{carpoolDetails.endLocation}</Text>
             </View>
             <View className="flex flex-column justify-center">
-              <Text className="ml-3">Vrije plaatsen:</Text>
+              <Text className="ml-3">{i18n.t('freeSeats')}</Text>
               <Text className="ml-14 text-dark_main font-bold text-xl">{carpoolDetails.details.availableSeats}</Text>
             </View>
             <View className="justify-center">

@@ -1,15 +1,16 @@
-import React, { useState, useCallback,  } from 'react';
+import React, { useState, useEffect,  } from 'react';
 import { View } from 'react-native';
-import ViewCarpools from '../components/AllCarpools';
+// import ViewCarpools from '../components/AllCarpools';
 import { fetchCarpools } from '../services/fetchCarpools';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { ViewCarpools } from '../services/filterCarpools';
+import { useNavigation } from '@react-navigation/native';
 import CustomButton from '../components/CustomButton';
 import RefreshableScrollView from '../components/RefreshableScrollView';
 import i18n from '../data/Translations';
 
 
 
-const PlannedRides = () => {
+const PlannedRides = ({ route }) => {
     const [carpools, setCarpools] = useState({});
     const navigation = useNavigation();
 
@@ -20,21 +21,29 @@ const PlannedRides = () => {
     const handleCreateCarpoolPress = () => {
         navigation.navigate('Carpool aanmaken');
     };
-
-    useFocusEffect(
-      useCallback(() => {
-          refreshCarpools();
-      }, [])
-    );
+    
+    if(route.params?.shouldRefresh === true) {
+      shouldRefresh = route.params.shouldRefresh;
+      refreshCarpools();
+      route.params.shouldRefresh = false
+      console.log('shouldRefresh: ' + shouldRefresh);
+    } else {
+      shouldRefresh = false;
+    }
+    useEffect(() => {
+      refreshCarpools();
+    }, []);
     return (
         <RefreshableScrollView onRefresh={refreshCarpools}>
             <View className="items-center mt-5 mb-3">
                 <CustomButton
                     title={i18n.t('createCarpool')}
-                    backgroundColor="transparent"
+                    backgroundColor="#0070AD"
                     borderColor='#0070AD'
-                    textColor='#0070AD'
-                    width={200}
+                    textColor='white'
+                    width={250}
+                    height={70}
+                    fontSize={18}
                     onPress={handleCreateCarpoolPress}
                 />
             </View>

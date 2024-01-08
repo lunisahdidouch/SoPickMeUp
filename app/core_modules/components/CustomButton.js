@@ -1,7 +1,7 @@
 import { View, Text, Pressable, StyleSheet } from 'react-native'
 import React from 'react'
 
-const CustomButton = ({title, onPress, backgroundColor = '#0070AD', borderColor = '#0070AD',  textColor = '#fff', width = 300, height = 50, borderWidth = 1}) => {
+const CustomButton = ({title, onPress, backgroundColor = '#0070AD', borderColor = '#0070AD',  textColor = '#fff', width = 300, height = 50, borderWidth = 1, fontSize = 14, fontWeight = "normal"}) => {
   const styles = StyleSheet.create({
     button: {
       backgroundColor: backgroundColor,
@@ -15,6 +15,8 @@ const CustomButton = ({title, onPress, backgroundColor = '#0070AD', borderColor 
     },
     text: {
       color: textColor,
+      fontSize: fontSize,
+      fontWeight: fontWeight,
     },
   })
 

@@ -1,15 +1,15 @@
-import { View, Text, Button, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import CarpoolCard from './CarpoolCard';
-
+import { formatDate } from '../utils/dateToText';
 
 const ViewCarpools = ({carpools}) => {
   const sortedCarpools = Object.entries(carpools).sort((a, b) => new Date(a[0]) - new Date(b[0]));
-
+  
     return(
         <ScrollView className="mb-6">
           {sortedCarpools.map(([date, carpoolsList]) => (
             <View key={date}>
-              <Text className="ml-9 mb-2 font-bold text-base">{date}</Text>
+              <Text className="ml-9 mb-2 font-bold text-base">{formatDate(date)}</Text>
               {carpoolsList.map((carpoolDetails, index) => (
                 <View key={`${carpoolDetails.date}-${index}`} style={styles.container}>
                   <CarpoolCard carpoolDetails={carpoolDetails} carpoolDate ={date} />

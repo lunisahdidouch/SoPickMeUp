@@ -1,25 +1,29 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FilterJoinedCarpools } from '../services/filterCarpools';
 import { fetchCarpools } from '../services/fetchCarpools';
-import { useFocusEffect } from '@react-navigation/native';
 import RefreshableScrollView from '../components/RefreshableScrollView';
 
 
 
-const PlannedRides = () => {
+const PlannedRides = ({ route }) => {
     const [carpools, setCarpools] = useState({});
 
     const refreshCarpools = async () => {
         const fetchedCarpools = await fetchCarpools();
         setCarpools(fetchedCarpools);
     }
+    if(route.params?.shouldRefresh === true) {
+      shouldRefresh = route.params.shouldRefresh;
+      refreshCarpools();
+      route.params.shouldRefresh = false
+      console.log('shouldRefresh: ' + shouldRefresh);
+    } else {
+      shouldRefresh = false;
+    }
 
-
-    useFocusEffect(
-      useCallback(() => {
-          refreshCarpools();
-      }, [])
-    );
+    useEffect(() => {
+      refreshCarpools();
+    }, []);
     return (
         <RefreshableScrollView onRefresh={refreshCarpools}>
             <FilterJoinedCarpools

@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, StyleSheet, Alert } from 'react-native';
+import { View, Text, StyleSheet, Alert } from 'react-native';
 import React, { useState, useContext } from 'react';
 import { saveCarpool } from '../services/storageService';
 import { deleteCarpool } from '../services/deleteCarpool';
@@ -12,10 +12,10 @@ import UserContext from '../../user_modules/services/UserContext';
 import i18n from '../data/Translations';
 import { useNavigation } from '@react-navigation/native';
 
-
 let driverName = 'Anoniem';
 const handleNavigation = (navigation) => {
-  navigation.navigate(i18n.t('tab1'));
+  // navigation.navigate(i18n.t('tab1'), { shouldRefresh: true });
+  navigation.navigate(i18n.t('tab1'),  { shouldRefresh: true } );
 };
 
 const EditCarpool = ({ route }) => {
@@ -38,7 +38,6 @@ const EditCarpool = ({ route }) => {
     { label: i18n.t('nameVisibilityOption2'), value: 'true'},
   ];
   
-  let newDate = carpoolDate;  
   
   const handleInputChangeDetails = (name, value) => {
     setEditedCarpoolDetails({ ...editedCarpoolDetails, [name]: value });
@@ -52,8 +51,8 @@ const EditCarpool = ({ route }) => {
     if(editedCarpool.nameVisibility === 'true') {
       driverName = currentUser.name;
     }
-    await saveCarpool(editedCarpool, editedCarpoolDetails, date);
     await deleteCarpool(carpoolDetails.carpoolId, carpoolDate);
+    await saveCarpool(editedCarpool, editedCarpoolDetails, date);
     Alert.alert(i18n.t('carpoolEdited'))
     handleNavigation(navigation);
   };
@@ -61,7 +60,7 @@ const EditCarpool = ({ route }) => {
 
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
         <TextField
             placeholder={i18n.t('startLocation')}
             value={editedCarpool.starterLocation}
@@ -75,7 +74,7 @@ const EditCarpool = ({ route }) => {
         <View style={styles.pickers}>
           <DatePicker
             value={new Date(date)}
-            onDateChange={(selectedDate) => setDate(selectedDate.toLocaleDateString())}
+            onDateChange={(selectedDate) => setDate(selectedDate.toISOString().split('T')[0])}
           />
           <TimePicker
             value={new Date(`${editedCarpool.details.departureTime}`)}
@@ -88,7 +87,7 @@ const EditCarpool = ({ route }) => {
         />
         <DropDown
           items={rideItems}
-          defaultValue={rideItems[0].value}
+          defaultValue={editedCarpool.details.rideType}
           name="rideType"
           mainValue={editedCarpool.details.rideType}
           handleInputChange={handleInputChangeDetails}
@@ -103,7 +102,7 @@ const EditCarpool = ({ route }) => {
         />
         <TextField
             placeholder={i18n.t('comment')}
-            value={editedCarpool.details.comment}
+            value={editedCarpoolDetails.comment}
             onChangeText={(text) => handleInputChangeDetails('comment', text)}
             multiline={true}
             height={80}
@@ -114,11 +113,10 @@ const EditCarpool = ({ route }) => {
           borderColor='#0070AD'
           textColor='#0070AD'
           onPress={handleSubmit}
-          // onPress={handleSubmit(carpoolDetails, carpoolDate, editedCarpool, editedCarpoolDetails, date, currentUser)}
           title={i18n.t('editCarpool')}
           />
         </View>
-    </ScrollView>
+    </View>
   );
 };
 
