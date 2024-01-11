@@ -3,10 +3,8 @@ import { View, Text, StyleSheet } from 'react-native';
 import BusFront from '../../assets/BusFront';
 import ChevronRight from '../../assets/ChevronRight';
 import ExtendRouteIcon from '../../assets/ExtendRouteIcon';
-import { Image } from 'expo-image';
 import { TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-// import CarpoolApplication
 
 const generateBoxShadowStyle = (
   xOffset,
@@ -48,7 +46,7 @@ const ExpandedCarpoolCard = ({ carpoolDate, carpoolDetails, screen }) => {
           <BusFront width="67" height="67" color="#0070AD" />
         </View>
         <Text className="mr-1 max-w-[50] w-10 font-extrabold">{carpoolDetails.details.departureTime}</Text>
-        <View className="">
+        <View>
             <ExtendRouteIcon width="30" height="90" color="transparent" color1="" color2="#D9D9D9" strokeColor="#686666" strokeColor1="#686666" strokeColor2="#686666" />
         </View>
         <View>
@@ -89,10 +87,6 @@ const styles = StyleSheet.create({
     marginRight: 12,
     justifyContent: 'center',
   },
-  timeRow: {
-    display: 'flex',
-    flexDirection: 'row',
-  },
   departureRow: {
     display: 'flex',
     flexDirection: 'row',
@@ -101,14 +95,6 @@ const styles = StyleSheet.create({
     marginLeft: 0,
     maxWidth: 100
   },
-  routeIcon: {
-    flex: 1,
-    width: 23,
-    backgroundColor: 'transparent',
-  },
-  chevronRight: {
-    marginTop: 20,
-  }
 });
 
 export default ExpandedCarpoolCard;

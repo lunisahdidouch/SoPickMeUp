@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import CreateCarpool from './app/core_modules/screens/CreateCarpool';
@@ -25,15 +25,18 @@ import sampleUsers from './app/user_modules/data/sampleUsers';
 import UserContext from './app/user_modules/services/UserContext';
 import i18n from './app/core_modules/data/Translations';
 
+const Tab = createBottomTabNavigator();
+
+const Stack = createStackNavigator();
+
+const Drawer = createDrawerNavigator();
+// i18n.locale = "nl";
 
 const initializeUsers = async () => {
   try {
     const existingUsers = await AsyncStorage.getItem('users');
     if (!existingUsers) {
       await AsyncStorage.setItem('users', JSON.stringify(sampleUsers));
-      console.log('Users initialized!');
-    } else {
-      console.log('Users already exist');
     }
   } catch (error) {
     console.error('Error initializing users:', error);
@@ -48,12 +51,6 @@ const getStoredLanguage = async () => {
 };
 
 
-const Tab = createBottomTabNavigator();
-
-const Stack = createStackNavigator();
-
-const Drawer = createDrawerNavigator();
-i18n.locale = "nl";
 getStoredLanguage();
 function MyTabs() {
   return (
@@ -182,8 +179,6 @@ function MainScreens() {
         </Drawer.Navigator>
   );
 }
-
-
 
 export default function App() {
   const [currentUser, setCurrentUser] = useState(null);

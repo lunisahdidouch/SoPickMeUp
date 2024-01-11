@@ -14,7 +14,6 @@ import { useNavigation } from '@react-navigation/native';
 
 let driverName = 'Anoniem';
 const handleNavigation = (navigation) => {
-  // navigation.navigate(i18n.t('tab1'), { shouldRefresh: true });
   navigation.navigate(i18n.t('tab1'),  { shouldRefresh: true } );
 };
 
@@ -56,8 +55,6 @@ const EditCarpool = ({ route }) => {
     Alert.alert(i18n.t('carpoolEdited'))
     handleNavigation(navigation);
   };
-
-
 
   return (
     <View style={styles.container}>
@@ -124,9 +121,6 @@ const styles = StyleSheet.create({
   container: {
       flex: 1,
       padding: 20,
-  },
-  createCarpool:{
-    marginTop: 20
   },
   pickers:{
     display: 'flex',

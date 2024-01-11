@@ -23,6 +23,7 @@ module.exports = {
       'orange_accent': '#FF4411',
       'grey_accent': '#686666',
       'red_accent': '#FF0000',
+      'grey_txt': '#A9A9A9',
     },
   },
   plugins: [],

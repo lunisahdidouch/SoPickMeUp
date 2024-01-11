@@ -6,7 +6,7 @@ import CalendarIcon from '../../assets/CalendarIcon';
 export default function DatePicker(props, value, onChangeText) {
   const [date, setDate] = useState(new Date());
 
-  const onChange = (event, selectedDate) => {
+  const onChange = ( selectedDate ) => {
     if (selectedDate) {
       setDate(selectedDate);
       props.onDateChange(selectedDate);
@@ -22,7 +22,6 @@ export default function DatePicker(props, value, onChangeText) {
     });
   };
 
-  // const { onPress, title = 'Save' } = props;
   return (
     <Pressable style={styles.button} onPress={showDatePicker}>
       <Text style={styles.text}

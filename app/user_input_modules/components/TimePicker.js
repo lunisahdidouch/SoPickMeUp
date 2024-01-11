@@ -22,15 +22,15 @@ export default function TimePicker(props, value, onChangeText) {
   };
 
   return (
-        <Pressable style={styles.button} onPress={showTimePicker}>
-        <Text style={styles.text}
-          value={value}
-          onChangeText={onChangeText}
-        >
-          {time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} 
-        </Text>
-        <ClockIcon width="32" height="32" color="transparent" strokeColor="#0070AD"/>
-      </Pressable> 
+    <Pressable style={styles.button} onPress={showTimePicker}>
+    <Text style={styles.text}
+      value={value}
+      onChangeText={onChangeText}
+    >
+      {time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} 
+    </Text>
+    <ClockIcon width="32" height="32" color="transparent" strokeColor="#0070AD"/>
+  </Pressable> 
   );
 };
 
@@ -52,7 +52,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginRight: 6,
     marginLeft: 6,
-
     color: '#686666',
   },
 });

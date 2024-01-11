@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { ScrollView, RefreshControl } from 'react-native';
 
 const RefreshableScrollView = ({ onRefresh, children }) => {

@@ -26,7 +26,6 @@ const LanguageSelectionScreen = ({ navigation }) => {
     nlColourText = "white";
   }
 
-
   return (
     <View>
       <View className="items-center mt-32 mb-3">
@@ -39,7 +38,7 @@ const LanguageSelectionScreen = ({ navigation }) => {
               height={65}
               onPress={() => setLanguage('en')}
           />
-        </View>
+      </View>
       <View className="items-center mt-5 mb-3">
           <CustomButton
               title="Nederlands"

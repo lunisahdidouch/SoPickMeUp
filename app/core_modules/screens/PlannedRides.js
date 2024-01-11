@@ -1,14 +1,11 @@
 import React, { useState, useEffect,  } from 'react';
 import { View } from 'react-native';
-// import ViewCarpools from '../components/AllCarpools';
 import { fetchCarpools } from '../services/fetchCarpools';
 import { ViewCarpools } from '../services/filterCarpools';
 import { useNavigation } from '@react-navigation/native';
 import CustomButton from '../components/CustomButton';
 import RefreshableScrollView from '../components/RefreshableScrollView';
 import i18n from '../data/Translations';
-
-
 
 const PlannedRides = ({ route }) => {
     const [carpools, setCarpools] = useState({});
@@ -26,7 +23,6 @@ const PlannedRides = ({ route }) => {
       shouldRefresh = route.params.shouldRefresh;
       refreshCarpools();
       route.params.shouldRefresh = false
-      console.log('shouldRefresh: ' + shouldRefresh);
     } else {
       shouldRefresh = false;
     }

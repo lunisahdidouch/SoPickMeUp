@@ -15,6 +15,7 @@ const i18n = new I18n({
         nameVisibilityOption2: "Visible", carpoolEdited: 'Carpool has been edited', carpoolDeleted: 'Carpool has been deleted', 
         applicationCanceled: 'Application has been canceled', carpoolCreated: 'Carpool has been created', username: "User name", 
         password: "Password", login: "Login", feedback: "Feedback", send: "Send", freeSeats: 'Open seats', createCarpoolHeader: 'Create a carpool as the driver',
+        anonymous: 'Anonymous', noComment: 'No comment', nameIsVisible: 'Name is visible', nameIsNotVisible: 'Name is not hidden',
       },
 
   nl: { 
@@ -30,6 +31,7 @@ const i18n = new I18n({
         carpoolEdited: 'Carpool is aangepast', carpoolDeleted: 'Carpool is verwijderd', applicationCanceled: 'Aanmelding is geannuleerd', 
         carpoolCreated: 'Carpool is aangemaakt', username: "Gebruikersnaam", password: "Wachtwoord", login: "Inloggen", feedback: "Feedback", 
         send: "Versturen", freeSeats: 'Vrije plaatsen', createCarpoolHeader: 'Carpool aanmaken als bestuurder',
+        anonymous: 'Anoniem', noComment: 'Geen opmerking', nameIsVisible: 'Naam is zichtbaar', nameIsNotVisible: 'Naam is niet zichtbaar',
       },
 });
 

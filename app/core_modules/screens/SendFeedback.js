@@ -1,9 +1,8 @@
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import React from 'react'
 import TextField from '../../user_input_modules/components/TextField';
 import CustomButton from '../components/CustomButton';
 import i18n from '../data/Translations';
-
 
 const SendFeedback = () => {
   return (

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View, ScrollView, StyleSheet, Text, Alert, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { View, StyleSheet, Text, Alert } from 'react-native';
 import Carpool from '../models/Carpool';
 import CarpoolDetails from '../models/CarpoolDetails';
 import { saveCarpool } from '../services/storageService';
@@ -50,14 +50,12 @@ const CreateCarpool = () => {
       setFormData({ ...formData, [name]: value });
   };
 
-  
-
   const handleSubmit = async () => {
     const { starterLocation, endLocation, departureDate, departureTime, availableSeats, rideType, nameVisibility, comment } = formData;
     const userId = currentUser.currentUser.userId;
 
     if(nameVisibility === 'true') {
-      driverName = currentUser.name;
+      driverName = currentUser.currentUser.name;
     }
     const newCarpool = new Carpool(userId, starterLocation, endLocation);
     const newCarpoolDetails = new CarpoolDetails(newCarpool.carpoolId, departureTime, availableSeats, rideType, nameVisibility, driverName, comment);
@@ -66,9 +64,6 @@ const CreateCarpool = () => {
     handleNavigation(navigation);
   };
   return (
-    // <ScrollView style={styles.container}>
-    // <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
-    //   <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
        <View style={styles.container}>
         <Text className="ml-4 mb-5 mt-5 font-extrabold text-xl">{i18n.t('createCarpoolHeader')}</Text>
         <TextField
@@ -110,7 +105,6 @@ const CreateCarpool = () => {
           mainValue={formData.nameVisibility}
           handleInputChange={handleInputChange}
         />
-
         <TextField
             placeholder={i18n.t('comment')}
             value={formData.comment}
@@ -128,11 +122,6 @@ const CreateCarpool = () => {
           />
         </View>
       </View>
-     // </TouchableWithoutFeedback>
-    //  </KeyboardAvoidingView> 
-
-    // </ScrollView>
-
   );
 };
 
@@ -140,9 +129,6 @@ const styles = StyleSheet.create({
   container: {
       flex: 1,
       padding: 20,
-  },
-  createCarpool:{
-    marginTop: 20
   },
   pickers:{
     display: 'flex',

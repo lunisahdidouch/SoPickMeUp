@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 
-const Dropdown = ({ name, mainValue, handleInputChange, items, defaultValue, onChangeItem }) => {
+const Dropdown = ({ name, mainValue, handleInputChange, items, defaultValue }) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(defaultValue);
   const [itemsList, setItemsList] = useState(items);
@@ -18,7 +18,6 @@ const Dropdown = ({ name, mainValue, handleInputChange, items, defaultValue, onC
       setItems={setItemsList}
       onChangeValue={(itemValue) => handleInputChange(name, itemValue)}
       selectedValue={mainValue}
-      // onValueChange={(itemValue) => handleInputChange(name, itemValue)}
     />
   );
 };

@@ -9,8 +9,12 @@ import { deleteCarpool } from '../services/deleteCarpool';
 const deletion = async (carpoolId, carpoolDate, navigation) => {
   await deleteCarpool(carpoolId, carpoolDate);
   Alert.alert(i18n.t('carpoolDeleted'))
-  navigation.goBack();
+  handleNavigation(navigation);
 }
+
+const handleNavigation = (navigation) => {
+  navigation.navigate(i18n.t('tab1'),  { shouldRefresh: true } );
+};
 
 const CreatedCarpoolDetails = ({ route }) => {
   const { carpoolDetails, carpoolDate } = route.params;
@@ -26,18 +30,17 @@ const CreatedCarpoolDetails = ({ route }) => {
       <Text className="font-extrabold text-2xl mb-3 ">{i18n.t('overview')}</Text>
       <Text className="font-extrabold text-xl">{carpoolDate}</Text>
 
-
       <View style={styles.card}>
         <Text className="mr-1 max-w-[50] w-10 font-extrabold">{carpoolDetails.details.departureTime}</Text>
         <View className="">
           <Image
             style={styles.routeIcon}
             source={require('../../assets/RouteIcon.png')}
-            // placeholder={blurhash}
             contentFit="cover"
             transition={1000}
             />
         </View>
+
         <View>
           <View>
             <View className="ml-1 w-50">
@@ -47,22 +50,30 @@ const CreatedCarpoolDetails = ({ route }) => {
           </View>
         </View>
       </View>
-      <View className="flex flex-column justify-center">
+      
+      <View className="mb-6 flex flex-column justify-center">
         <Text className="ml-3 font-extrabold text-xl">{i18n.t('availableSeats')}:</Text>
         <Text className="ml-5 text-xl">{carpoolDetails.details.availableSeats}</Text>
       </View>
-      <View className="flex flex-column justify-center">
+
+      <View className="mb-6 flex flex-column justify-center">
         <Text className="ml-3 font-extrabold text-xl">{i18n.t('driver')}:</Text>
-        <Text className="ml-3 mt-2">{carpoolDetails.details.driverName}</Text>
+        {
+          carpoolDetails.details.nameVisibility === 'true' ?
+            <Text className="ml-3 mt-2">{i18n.t('nameIsVisible')}</Text> :
+            <Text className="ml-3 mt-2">{i18n.t('nameIsNotVisible')}</Text> 
+        }
       </View>
-      {/* <View className="flex flex-column justify-center">
-        <Text className="ml-3 font-extrabold text-xl">{i18n.t('passengers')}:</Text>
-        <Text className="ml-3 mt-2">{carpoolDetails.details.passengers}</Text>
-      </View> */}
-      <View className="flex flex-column justify-center">
+
+      <View className="mb-2 flex flex-column justify-center">
         <Text className="ml-3 font-extrabold text-xl">{i18n.t('comment')}:</Text>
-        <Text className="ml-3 mt-2">{carpoolDetails.details.comment}</Text>
+        {
+          carpoolDetails.details.comment !== '' ?
+            <Text className="ml-3 mt-2">{carpoolDetails.details.comment}</Text> :
+            <Text className="ml-3 mt-2 text-grey_txt">{i18n.t('noComment')}</Text> 
+        }
       </View>
+
       <View className="items-center mt-5">
             <CustomButton
             backgroundColor="transparent"
@@ -72,6 +83,7 @@ const CreatedCarpoolDetails = ({ route }) => {
             onPress={() => handleCreateCarpoolPress('Carpool aanpassen')}
             />
       </View>
+
       <View className="items-center mt-5">
             <CustomButton
             backgroundColor="transparent"
@@ -94,18 +106,6 @@ const styles = StyleSheet.create({
     padding: 17,
     marginBottom: 20,
   },
-  busIcon: {
-    marginRight: 12,
-    justifyContent: 'center',
-  },
-  timeRow: {
-    display: 'flex',
-    flexDirection: 'row',
-  },
-  departureRow: {
-    display: 'flex',
-    flexDirection: 'row',
-  },
   destination: {
     marginLeft: 0,
     maxWidth: 100
@@ -115,9 +115,6 @@ const styles = StyleSheet.create({
     width: 23,
     backgroundColor: 'transparent',
   },
-  chevronRight: {
-    marginTop: 20,
-  }
 });
 
 export default CreatedCarpoolDetails;

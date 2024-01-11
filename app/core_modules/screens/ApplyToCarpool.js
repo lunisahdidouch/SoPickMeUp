@@ -4,8 +4,7 @@ import UserContext from '../../user_modules/services/UserContext';
 import { useContext } from 'react';
 import CarpoolRequest from '../models/CarpoolRequest';
 import CustomButton from '../components/CustomButton';
-import randomValue from '../utils/randomValue';
-import saveCarpool from '../services/storageService';
+import { saveCarpool } from '../services/storageService';
 import TextField from '../../user_input_modules/components/TextField';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
@@ -15,14 +14,13 @@ const handlePress = (navigation) => {
   navigation.navigate(i18n.t('tab2'));
 };
 
-// const ApplyToCarpoolTemp = async (carpoolDetails, carpoolDate, userId) => {
-//   if (!carpoolDetails.details.passengers) {
-//     carpoolDetails.details.passengers = [];
-//   }
-//   console.log("User id check: " + userId);
-//   carpoolDetails.details.passengers.push(userId);
-//   await saveCarpool(carpoolDetails, carpoolDetails.details, carpoolDate);
-// }
+const ApplyToCarpoolTemp = async (carpoolDetails, carpoolDate, userId) => {
+  if (!carpoolDetails.details.passengers) {
+    carpoolDetails.details.passengers = [];
+  }
+  carpoolDetails.details.passengers.push(userId);
+  await saveCarpool(carpoolDetails, carpoolDetails.details, carpoolDate);
+}
 
 const ApplyToCarpool = ({ route }) => {
   const { carpoolDetails, carpoolDate } = route.params;
@@ -30,18 +28,22 @@ const ApplyToCarpool = ({ route }) => {
   const currentUser = useContext(UserContext);
   const navigation = useNavigation();
 
-
   const handleInputChange = (value) => {
       setPickupLocation(value);
   };
+
   const handleSubmit = async() => {
+    try {
     const newCarpoolRequest = new CarpoolRequest(carpoolDetails.userId, currentUser.currentUser.userId, pickupLocation, carpoolDetails.details.carpoolId);
     let savedCarpoolRequests = JSON.parse(await AsyncStorage.getItem('carpoolRequests')) || [];
     savedCarpoolRequests.push({ ...newCarpoolRequest});
     await AsyncStorage.setItem('carpoolRequests', JSON.stringify(savedCarpoolRequests));
     Alert.alert("Aanvraag ingestuurd!")
-    // await ApplyToCarpoolTemp(carpoolDetails, carpoolDate, currentUser.currentUser.userId);
+    await ApplyToCarpoolTemp(carpoolDetails, carpoolDate, currentUser.currentUser.userId);
     handlePress(navigation);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

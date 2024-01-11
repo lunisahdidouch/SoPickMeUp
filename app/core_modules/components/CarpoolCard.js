@@ -34,9 +34,7 @@ const generateBoxShadowStyle = (
 const CarpoolCard = ({ carpoolDate, carpoolDetails }) => {
 
   generateBoxShadowStyle(-2, 4, 'black', 0.2, 3, 6, 'black');
-
   const navigation = useNavigation();
-
 
   const handlePress = () => {
     navigation.navigate('Gekozen carpool', { carpoolDetails, carpoolDate });

@@ -3,8 +3,6 @@ import { FilterJoinedCarpools } from '../services/filterCarpools';
 import { fetchCarpools } from '../services/fetchCarpools';
 import RefreshableScrollView from '../components/RefreshableScrollView';
 
-
-
 const PlannedRides = ({ route }) => {
     const [carpools, setCarpools] = useState({});
 
@@ -16,7 +14,6 @@ const PlannedRides = ({ route }) => {
       shouldRefresh = route.params.shouldRefresh;
       refreshCarpools();
       route.params.shouldRefresh = false
-      console.log('shouldRefresh: ' + shouldRefresh);
     } else {
       shouldRefresh = false;
     }
@@ -31,7 +28,6 @@ const PlannedRides = ({ route }) => {
                 fetchCarpools={refreshCarpools}
                 />
         </RefreshableScrollView>
-
   );
 };
 export default PlannedRides;

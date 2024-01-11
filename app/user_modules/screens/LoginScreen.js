@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
-import { View, TextInput, Button, Alert } from 'react-native';
+import { View, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Updates from 'expo-updates';
 import CustomButton from '../../core_modules/components/CustomButton';
@@ -33,7 +32,6 @@ const LoginScreen = () => {
 
 
       if (user) {
-        console.log('user: -  ----', JSON.stringify(user));
         await AsyncStorage.setItem('currentUser', JSON.stringify(user));
         refresh();
         // handlePress();

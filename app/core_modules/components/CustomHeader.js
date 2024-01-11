@@ -21,7 +21,6 @@ const CustomHeader = ({navigation, name, showHamburger = "true"}) => {
                   <Pressable onPress={() => navigationControls.openDrawer()} className="mr-4">
                     <HamburgerIcon color= "white"  strokeColor={"white"} width={38} height={38} />
                   </Pressable>
-                    // <HamburgerIcon onPress={() => navigation.openDrawer()} />
                   ) : (
                     <Pressable onPress={() => navigation.goBack(null)} className="mr-4">
                       <ArrowBack                   
