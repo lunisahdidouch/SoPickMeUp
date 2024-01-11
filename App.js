@@ -30,7 +30,6 @@ const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 const Drawer = createDrawerNavigator();
-// i18n.locale = "nl";
 
 const initializeUsers = async () => {
   try {
