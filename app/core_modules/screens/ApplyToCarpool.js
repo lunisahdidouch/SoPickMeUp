@@ -66,39 +66,4 @@ const ApplyToCarpool = ({ route }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  card: {
-    display: 'flex',
-    flexDirection: 'row',
-    width: 350,
-    height: 100,
-    padding: 17,
-    marginBottom: 20,
-  },
-  busIcon: {
-    marginRight: 12,
-    justifyContent: 'center',
-  },
-  timeRow: {
-    display: 'flex',
-    flexDirection: 'row',
-  },
-  departureRow: {
-    display: 'flex',
-    flexDirection: 'row',
-  },
-  destination: {
-    marginLeft: 0,
-    maxWidth: 100
-  },
-  routeIcon: {
-    flex: 1,
-    width: 23,
-    backgroundColor: 'transparent',
-  },
-  chevronRight: {
-    marginTop: 20,
-  }
-});
-
 export default ApplyToCarpool;

@@ -24,11 +24,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import sampleUsers from './app/user_modules/data/sampleUsers';
 import UserContext from './app/user_modules/services/UserContext';
 import i18n from './app/core_modules/data/Translations';
+import { LogBox } from "react-native";
+
+LogBox.ignoreAllLogs();
 
 const Tab = createBottomTabNavigator();
-
 const Stack = createStackNavigator();
-
 const Drawer = createDrawerNavigator();
 
 const initializeUsers = async () => {
@@ -48,7 +49,6 @@ const getStoredLanguage = async () => {
     i18n.locale = language;
   }
 };
-
 
 getStoredLanguage();
 function MyTabs() {

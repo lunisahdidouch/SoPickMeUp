@@ -47,7 +47,7 @@ const CarpoolCard = ({ carpoolDate, carpoolDetails }) => {
           <BusFront width="52" height="52" color="#0070AD" />
         </View>
         <Text className="mr-1 max-w-[50] w-10 font-extrabold">{carpoolDetails.details.departureTime}</Text>
-        <View style={styles.imageContainer} className="">
+        <View>
           <Image
             style={styles.routeIcon}
             source={require('../../assets/RouteIcon.png')}
@@ -108,13 +108,6 @@ const styles = StyleSheet.create({
   destination: {
     marginLeft: 0,
     maxWidth: 100
-  },
-  imageContainer: {
-    // flex: 1,
-    // backgroundColor: 'transparent',
-    // alignItems: 'center',
-    // justifyContent: 'center',
-    // marginRight: 10,
   },
   routeIcon: {
     flex: 1,

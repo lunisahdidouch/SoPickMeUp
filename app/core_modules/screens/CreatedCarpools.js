@@ -16,7 +16,6 @@ const CreatedCarpools = ({ route }) => {
   const handleCreateCarpoolPress = () => {
       navigation.navigate('Carpool aanpassen', { carpoolDetails, carpoolDate });
   };
-
   if(route.params?.shouldRefresh === true) {
     shouldRefresh = route.params.shouldRefresh;
     refreshCarpools();

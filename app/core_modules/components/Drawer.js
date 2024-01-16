@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { View, Text, Pressable } from 'react-native';
-import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
+import { DrawerContentScrollView } from '@react-navigation/drawer';
 import ProfileIcon from '../../assets/ProfileIcon';
 import Globe from '../../assets/Globe';
 import InformationIcon from '../../assets/InformationIcon';

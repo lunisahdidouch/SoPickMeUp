@@ -21,13 +21,19 @@
       "adaptiveIcon": {
         "foregroundImage": "./app/assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.lunis.SoPickMeUp"
     },
     "web": {
       "favicon": "./app/assets/favicon.png"
     },
     "plugins": [
       "expo-localization"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "04ad7956-b1a0-4275-930c-95747d4b682b"
+      }
+    }
   }
 }

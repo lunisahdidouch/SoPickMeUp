@@ -6,7 +6,7 @@ import CalendarIcon from '../../assets/CalendarIcon';
 export default function DatePicker(props, value, onChangeText) {
   const [date, setDate] = useState(new Date());
 
-  const onChange = ( selectedDate ) => {
+  const onChange = ( event, selectedDate ) => {
     if (selectedDate) {
       setDate(selectedDate);
       props.onDateChange(selectedDate);

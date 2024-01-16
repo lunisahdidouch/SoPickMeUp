@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View, StyleSheet, Text, Alert } from 'react-native';
+import { View, StyleSheet, Text, Alert, ScrollView } from 'react-native';
 import Carpool from '../models/Carpool';
 import CarpoolDetails from '../models/CarpoolDetails';
 import { saveCarpool } from '../services/storageService';
@@ -64,7 +64,7 @@ const CreateCarpool = () => {
     handleNavigation(navigation);
   };
   return (
-       <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <Text className="ml-4 mb-5 mt-5 font-extrabold text-xl">{i18n.t('createCarpoolHeader')}</Text>
         <TextField
             placeholder={i18n.t('startLocation')}
@@ -121,7 +121,7 @@ const CreateCarpool = () => {
           title={i18n.t('createCarpool')}
           />
         </View>
-      </View>
+      </ScrollView>
   );
 };
 
