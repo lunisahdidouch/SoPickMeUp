@@ -31,7 +31,7 @@ const PlannedRides = ({ route }) => {
     }, []);
     return (
         <RefreshableScrollView onRefresh={refreshCarpools}>
-            <View className="items-center mt-5 mb-3">
+            <View className="items-center mt-10 mb-10">
                 <CustomButton
                     title={i18n.t('createCarpool')}
                     backgroundColor="#0070AD"

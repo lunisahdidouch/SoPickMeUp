@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Alert } from 'react-native';
+import { View, Text, StyleSheet, Alert, ScrollView } from 'react-native';
 import React, { useState, useContext } from 'react';
 import { saveCarpool } from '../services/storageService';
 import { deleteCarpool } from '../services/deleteCarpool';
@@ -57,7 +57,7 @@ const EditCarpool = ({ route }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
         <TextField
             placeholder={i18n.t('startLocation')}
             value={editedCarpool.starterLocation}
@@ -113,7 +113,7 @@ const EditCarpool = ({ route }) => {
           title={i18n.t('editCarpool')}
           />
         </View>
-    </View>
+    </ScrollView>
   );
 };
 

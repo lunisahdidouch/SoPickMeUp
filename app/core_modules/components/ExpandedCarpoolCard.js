@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
   card: {
     display: 'flex',
     flexDirection: 'row',
-    borderWidth: 1,
+    // borderWidth: 1,
     borderColor: '#000',
     borderRadius: 18,
     width: 350,
